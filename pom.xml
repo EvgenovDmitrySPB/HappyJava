@@ -20,9 +20,5 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysqlConnectorVersion}</version>
         </dependency>
-
-
     </dependencies>
-
-
 </project>
