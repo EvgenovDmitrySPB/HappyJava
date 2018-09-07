@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) throws SQLException, IOException {
 
         //New comment
+        //New comment 1
         SkillView skillView = new SkillView();
         skillView.createTable();
         AccountView accountView = new AccountView();
