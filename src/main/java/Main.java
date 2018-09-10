@@ -14,16 +14,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws SQLException, IOException {
 
-
-
-        //New comment
         //Comment 3
         SkillView skillView = new SkillView();
-        //skillView.createTable();
         AccountView accountView = new AccountView();
-        //accountView.createTable();
         DeveloperView developerView = new DeveloperView();
-        //developerView.createTable();
 
         Scanner scannerSkill     = new Scanner(System.in);
         Scanner scannerAccount   = new Scanner(System.in);
