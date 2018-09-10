@@ -41,7 +41,7 @@
                     <propertyFile>liquibase/liquibase.properties</propertyFile>
                     <changeLogFile>liquibase/db.changelog-master.xml</changeLogFile>
                 </configuration>
-                <!--  I personally prefer run  it manually-->
+                <!--  It runnable method for liquibase-->
                <executions>
                  <execution>
                    <phase>process-resources</phase>

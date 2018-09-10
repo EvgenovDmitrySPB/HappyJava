@@ -3,8 +3,6 @@ package net.proselyte.crud.repository.jdbc;
 import net.proselyte.crud.builders.AccountBuilder;
 import net.proselyte.crud.model.Account;
 import net.proselyte.crud.repository.AccountRepository;
-import net.proselyte.crud.util.ConnectorMySQL;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

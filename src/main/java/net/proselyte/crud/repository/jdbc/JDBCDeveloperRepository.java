@@ -7,8 +7,6 @@ import net.proselyte.crud.model.Account;
 import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 import net.proselyte.crud.repository.DeveloperRepository;
-import net.proselyte.crud.util.ConnectorMySQL;
-
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;

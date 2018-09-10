@@ -3,9 +3,6 @@ package net.proselyte.crud.repository.jdbc;
 import net.proselyte.crud.builders.SkillBuilder;
 import net.proselyte.crud.model.Skill;
 import net.proselyte.crud.repository.SkillRepository;
-import net.proselyte.crud.util.ConnectorMySQL;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

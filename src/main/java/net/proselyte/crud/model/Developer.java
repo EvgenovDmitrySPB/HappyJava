@@ -63,13 +63,8 @@ public class Developer {
         this.account = account;
     }
 
-    public String getSkills() {
-        String skillTemp= "";
-        for (Skill skill: this.skills) {
-            skillTemp = skillTemp + skill.getId() + " ";
-        }
-        skillTemp = skillTemp.substring(0,skillTemp.length() - 1);
-        return skillTemp;
+    public Set<Skill> getSkills() {
+        return skills;
     }
 
     public void setSkills(Set<Skill> skills) {
