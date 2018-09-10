@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class ConnectorMySQL {
     private final Connection connection;
-    private static final String PATH = "src\\main\\resources\\application.properties";
+    private static final String PATH = "src\\main\\resources\\liquibase\\liquibase.properties";
 
     public ConnectorMySQL() {
         this.connection = getMySqlConnection();
@@ -34,11 +34,8 @@ public class ConnectorMySQL {
             prop.load(fis);
 
             StringBuilder url = new StringBuilder();
-            url.    append("jdbc:mysql://").        //db type
-                    append(prop.getProperty("url")).           //host name
-                    append(":" + prop.getProperty("port") + "/").                //port
-                    append(prop.getProperty("dbName") + "?").            //db name
-                    append("user=" + prop.getProperty("user")+ "&").           //login
+            url.    append(prop.getProperty("url")+ "?").           //host name + port + dbName
+                    append("user=" + prop.getProperty("username")+ "&").           //login
                     append("password=" + prop.getProperty("password"));      //password
 
             try {
