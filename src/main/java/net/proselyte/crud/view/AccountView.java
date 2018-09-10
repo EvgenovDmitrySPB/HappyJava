@@ -33,10 +33,6 @@ public class AccountView {
         accountController.saveAccount(skillBuilder.toAccount());
     }
 
-    public void createTable() throws SQLException {
-        accountController.createTable();
-    }
-
     public void getSkillById() throws SQLException {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");

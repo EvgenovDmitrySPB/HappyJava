@@ -75,22 +75,6 @@ public class JDBCAccountRepository implements AccountRepository {
     }
 
     @Override
-    public void createTable() throws SQLException {
-        try {
-            statement = connection.createStatement();
-            String getSql = "CREATE TABLE ACCOUNTS (id int PRIMARY KEY UNIQUE , accountData VARCHAR(100))";
-            statement.executeUpdate(getSql);
-            System.out.println("TABLE ACCOUNTS has created");
-        }catch (SQLException e){
-            System.out.println("TABLE ACCOUNTS already exists");
-        } finally{
-            if (statement != null){
-                statement.close();
-            }
-        }
-    }
-
-    @Override
     public void getAll() throws SQLException {
         int temp = 0;
         try {

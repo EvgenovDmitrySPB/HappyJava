@@ -36,10 +36,6 @@ public class SkillView {
         skillController.saveSkill(skillBuilder.toSkill());
     }
 
-    public void createTable() throws SQLException {
-        skillController.createTable();
-    }
-
     public void getSkillById() throws SQLException {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");

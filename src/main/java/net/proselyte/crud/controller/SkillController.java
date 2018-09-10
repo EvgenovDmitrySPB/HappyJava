@@ -23,10 +23,6 @@ public class SkillController {
         }
     }
 
-    public void createTable() throws SQLException {
-        skillRepository.createTable();
-    }
-
     public void saveSkill(Skill skill) throws SQLException {
         if(skill == null){
             throw new IllegalArgumentException();

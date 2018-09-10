@@ -22,10 +22,6 @@ public class AccountController {
         }
     }
 
-    public void createTable() throws SQLException {
-        accountRepository.createTable();
-    }
-
     public void saveAccount(Account Account) throws SQLException {
         if(Account == null){
             throw new IllegalArgumentException();

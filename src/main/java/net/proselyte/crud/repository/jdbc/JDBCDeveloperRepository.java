@@ -124,22 +124,6 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void createTable() throws SQLException {
-        try {
-            statement = connection.createStatement();
-            String getSql = "CREATE TABLE DEVELOPERS (id int PRIMARY KEY UNIQUE, firstName VARCHAR(100), lastName VARCHAR(100), specialty VARCHAR(100), account LONG, skills VARCHAR(100))";
-            statement.executeUpdate(getSql);
-            System.out.println("TABLE DEVELOPERS has created");
-        }catch (SQLException e){
-            System.out.println("TABLE DEVELOPERS already exists");
-        } finally{
-            if (statement != null){
-                statement.close();
-            }
-        }
-    }
-
-    @Override
     public void getAll() throws SQLException {
         int temp = 0;
         try {

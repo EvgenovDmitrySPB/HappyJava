@@ -68,10 +68,6 @@ public class DeveloperView {
         developerController.saveDeveloper(developerBuilder.toDeveloper());
     }
 
-    public void createTable() throws SQLException {
-        developerController.createTable();
-    }
-
     public void getDeveloperById() throws SQLException {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");

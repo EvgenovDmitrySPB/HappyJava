@@ -76,22 +76,6 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
     }
 
     @Override
-    public void createTable() throws SQLException {
-        try {
-            statement = connection.createStatement();
-            String getSql = "CREATE TABLE SKILLS (id int PRIMARY KEY UNIQUE , name VARCHAR(100))";
-            statement.executeUpdate(getSql);
-            System.out.println("TABLE SKILLS has created");
-        }catch (SQLException e){
-            System.out.println("TABLE SKILLS already exists");
-        } finally{
-            if (statement != null){
-                statement.close();
-            }
-        }
-    }
-
-    @Override
     public void getAll() throws SQLException {
         int temp =0;
         try {

@@ -15,8 +15,5 @@ public interface SkillRepository extends GenericRepository<Skill, Long >{
     void deleteById(Long aLong) throws SQLException;
 
     @Override
-    void createTable() throws SQLException;
-
-    @Override
     void getAll() throws SQLException;
 }

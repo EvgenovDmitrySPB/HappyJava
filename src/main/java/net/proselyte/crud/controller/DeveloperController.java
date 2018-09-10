@@ -22,9 +22,6 @@ public class DeveloperController {
         }
     }
 
-    public void createTable() throws SQLException {
-        developerRepository.createTable();
-    }
 
     public void saveDeveloper(Developer developer) throws SQLException {
         if(developer == null){
