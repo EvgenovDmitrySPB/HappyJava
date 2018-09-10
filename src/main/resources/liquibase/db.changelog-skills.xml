@@ -5,16 +5,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="create skills" author="Evgenov Dmitry ">
+    <changeSet id="create_skills" author="EvgenovDmitry">
         <comment>
             CREATE SKILLS
         </comment>
         <sql>
-            CREATE TABLE SKILLS (
-			id int PRIMARY KEY UNIQUE , 
-			name VARCHAR(100
-            )
+            CREATE TABLE SKILLS(
+			id int PRIMARY KEY UNIQUE,
+			name VARCHAR(100))
         </sql>
     </changeSet>
-
 </databaseChangeLog>

@@ -6,19 +6,18 @@
 		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="create developers" author="Evgenov Dmitry ">
+    <changeSet id="create_developers" author="EvgenovDmitry">
         <comment>
             CREATE DEVELOPERS
         </comment>
         <sql>
-		CREATE TABLE DEVELOPERS (
+		CREATE TABLE DEVELOPERS(
 			id int PRIMARY KEY UNIQUE,
 			firstName VARCHAR(100),
 			lastName VARCHAR(100),
 			specialty VARCHAR(100),
 			account LONG,
-			skills VARCHAR(100)
-		)
+			skills VARCHAR(100))
         </sql>
     </changeSet>
 

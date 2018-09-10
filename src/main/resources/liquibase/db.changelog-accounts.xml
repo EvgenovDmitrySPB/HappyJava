@@ -4,15 +4,14 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="create accounts" author="Evgenov Dmitry ">
+    <changeSet id="create_accounts" author="EvgenovDmitry">
         <comment>
             CREATE ACCOUNTS
         </comment>
         <sql>
 			CREATE TABLE ACCOUNTS (
 				id int PRIMARY KEY UNIQUE , 
-				accountData VARCHAR(100)
-			)
+				accountData VARCHAR(100))
         </sql>
     </changeSet>
 
