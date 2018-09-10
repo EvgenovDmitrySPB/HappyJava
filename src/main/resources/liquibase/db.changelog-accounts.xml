@@ -10,7 +10,7 @@
         </comment>
         <sql>
 			CREATE TABLE ACCOUNTS (
-				id int PRIMARY KEY UNIQUE , 
+				id int(5) PRIMARY KEY UNIQUE ,
 				accountData VARCHAR(100))
         </sql>
     </changeSet>

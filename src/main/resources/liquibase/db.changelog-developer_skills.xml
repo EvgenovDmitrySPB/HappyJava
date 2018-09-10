@@ -11,8 +11,8 @@
         </comment>
         <sql>
             CREATE TABLE DEVELOPER_SKILLS(
-			id int PRIMARY KEY UNIQUE,
-			name VARCHAR(100))
+			idDeveloper int(5),
+			idSkill int(5))
         </sql>
     </changeSet>
 
