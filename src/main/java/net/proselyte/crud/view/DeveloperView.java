@@ -33,33 +33,45 @@ public class DeveloperView {
         String lastName = scanner2.next();
         System.out.println("Please enter specialty");
         String specialty = scanner2.next();
-        System.out.println("Please enter Account id");
-        Long accountId = scanner2.nextLong();
 
-        boolean repeat = true;
-        ArrayList<Integer> list = new ArrayList<>();
-        while (repeat){
-            System.out.println("Please enter Skill id");
-            Long skillId = scanner2.nextLong();
-            list.add(skillId.intValue());
+        boolean repeatAccount = true;
+        AccountController accountController = new AccountController();
+        Account account = null;
 
-            System.out.println("Do you want to enter more skill ? 1 - yes, 2- no");
+        while (repeatAccount){
+            System.out.println("Please enter Account id");
+            Long accountId = scanner2.nextLong();
+            accountController = new AccountController();
+            account = accountController.getAccountById(accountId);
+            if (account.getId() == null){
+                System.out.println("Account with id=" + accountId + " not exist!");
+            }
+            System.out.println("Do you want to enter more/other account ? 1 - yes, 2- no");
             Scanner scanner3 = new Scanner(System.in);
             int repeatInt = scanner3.nextInt();
             if (repeatInt != 1){
-                repeat = false;
+                repeatAccount = false;
             }
         }
 
-        AccountController accountController = new AccountController();
-        Account account = accountController.getAccountById(accountId);
-
+        boolean repeatSkill = true;
         Set<Skill> skills = new HashSet<>();
         SkillController skillController = new SkillController();
-        for (int x:list) {
-            Skill skill = skillController.getSkillById((long) x);
-            if (skill.getId() != null){
+
+        while (repeatSkill){
+            System.out.println("Please enter Skill id");
+            Long skillId = scanner2.nextLong();
+            Skill skill = skillController.getSkillById((long) skillId.intValue());
+            if (skill.getId() == null){
+                System.out.println("Skill with id=" + skillId + " not exist!");
+            }else{
                 skills.add(skill);
+            }
+            System.out.println("Do you want to enter more/other  skill ? 1 - yes, 2- no");
+            Scanner scanner4 = new Scanner(System.in);
+            int repeatInt = scanner4.nextInt();
+            if (repeatInt != 1){
+                repeatSkill = false;
             }
         }
 
