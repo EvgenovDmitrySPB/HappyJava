@@ -29,12 +29,16 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         try {
             statement = connection.createStatement();
             String getSql = "INSERT INTO developers VALUES(" + developer.getId().intValue() + ",'" + developer.getFirstName() +
-                    "','" + developer.getLastName() + "','" + developer.getSpecialty() + "','" + developer.getAccount().getId().intValue() +
-                    "','" + developer.getSkills() + "')";
+                    "','" + developer.getLastName() + "','" + developer.getSpecialty() + "','" + developer.getAccount().getId().intValue() + "')";
             statement.executeUpdate(getSql);
             System.out.println("Operation save DEVELOPERS. Ok");
+            for (Skill idSkill:developer.getSkills()) {
+                String getSqlSkill = "INSERT INTO developer_skills VALUES(" + developer.getId().intValue() + "," + idSkill.getId().intValue() + ")";
+                statement.executeUpdate(getSqlSkill);
+            }
         }catch (SQLException e){
             System.out.println("Operation save DEVELOPERS. SQLException");
+            e.printStackTrace();
         }finally{
             if (statement != null){
                 statement.close();
@@ -48,7 +52,7 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         try {
             statement = connection.createStatement();
 
-            String getSql = "SELECT id,firstName,lastName,specialty,account,skills FROM DEVELOPERS WHERE id=" + aLong.intValue();
+            String getSql = "SELECT id,firstName,lastName,specialty,account FROM DEVELOPERS WHERE id=" + aLong.intValue();
             ResultSet result = statement.executeQuery(getSql);
             DeveloperBuilder developerBuilder = new DeveloperBuilder();
             while (result.next()) {
@@ -127,7 +131,15 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         try {
             statement = connection.createStatement();
 
-            String getSql = "SELECT id,firstName,lastName,specialty,account,skills FROM DEVELOPERS";
+            String getSql = "SELECT \n" +
+                    "  developers.id,\n" +
+                    "  developers.firstName,\n" +
+                    "  developers.lastName,\n" +
+                    "  developers.specialty,\n" +
+                    "  developers.account,\n" +
+                    "  developer_skills.idDeveloper AS idSkill FROM DEVELOPERS\n" +
+                    "LEFT JOIN \n" +
+                    "  developer_skills ON developers.id = developer_skills.idDeveloper";
             ResultSet result = statement.executeQuery(getSql);
             DeveloperBuilder developerBuilder = new DeveloperBuilder();
             while (result.next()) {
@@ -140,35 +152,35 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
                 AccountController accountController = new AccountController();
                 Account account = accountController.getAccountById((long)idAccount);
 
-                String skillString = result.getString(6);
-                byte[] buffer = skillString.getBytes();
-                ByteArrayInputStream byteArray = new ByteArrayInputStream(buffer);
-                int c;
-                String tempId = "";
-                ArrayList<Integer> list = new ArrayList<>();
-                while((c = byteArray.read()) != -1){
-                    if ((char)c == ' ' ){
-                        list.add(Integer.parseInt(tempId));
-                        tempId = "";
-                    }else {
-                        tempId = tempId + (char)c;
-                    }
-                }
-                if (tempId != ""){
-                    list.add(Integer.parseInt(tempId));
-                }
+//                String skillString = result.getString(6);
+//                byte[] buffer = skillString.getBytes();
+//                ByteArrayInputStream byteArray = new ByteArrayInputStream(buffer);
+//                int c;
+//                String tempId = "";
+//                ArrayList<Integer> list = new ArrayList<>();
+//                while((c = byteArray.read()) != -1){
+//                    if ((char)c == ' ' ){
+//                        list.add(Integer.parseInt(tempId));
+//                        tempId = "";
+//                    }else {
+//                        tempId = tempId + (char)c;
+//                    }
+//                }
+//                if (tempId != ""){
+//                    list.add(Integer.parseInt(tempId));
+//                }
 
-                Set<Skill> skills = new HashSet<>();
-                SkillController skillController = new SkillController();
-                for (int x:list) {
-                    Skill skill = skillController.getSkillById((long) x);
-                    if (skill.getId() != null){
-                        skills.add(skill);
-                    }
-                }
+//                Set<Skill> skills = new HashSet<>();
+//                SkillController skillController = new SkillController();
+//                for (int x:list) {
+//                    Skill skill = skillController.getSkillById((long) x);
+//                    if (skill.getId() != null){
+//                        skills.add(skill);
+//                    }
+//                }
 
                 developerBuilder.withId(id).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                        withAccount(account).withSkill(skills);
+                        withAccount(account);//-*-----
                 Developer developer = developerBuilder.toDeveloper();
                 System.out.println(developer.toString());
                 temp++;

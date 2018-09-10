@@ -16,8 +16,7 @@
 			firstName VARCHAR(100),
 			lastName VARCHAR(100),
 			specialty VARCHAR(100),
-			account LONG,
-			skills VARCHAR(100))
+			account LONG)
         </sql>
     </changeSet>
 
