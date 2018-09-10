@@ -3,15 +3,24 @@ package net.proselyte.crud.controller;
 import net.proselyte.crud.model.Skill;
 import net.proselyte.crud.repository.SkillRepository;
 import net.proselyte.crud.repository.jdbc.JDBCSkillRepositoryImpl;
+import net.proselyte.crud.util.ConnectorMySQL;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class SkillController {
 
     private SkillRepository skillRepository;
+    private Connection connection;
 
     public SkillController() throws SQLException {
-        skillRepository = new JDBCSkillRepositoryImpl();
+        this.connection = new ConnectorMySQL().getConnection();
+        if (this.connection == null){
+            System.out.println("Warning! You don't have connection with MySQL");
+            return;
+        }else {
+            skillRepository = new JDBCSkillRepositoryImpl(connection);
+        }
     }
 
     public void createTable() throws SQLException {
@@ -40,7 +49,6 @@ public class SkillController {
     }
 
     public void getAll() throws SQLException {
-
         skillRepository.getAll();
     }
 

@@ -3,14 +3,23 @@ package net.proselyte.crud.controller;
 import net.proselyte.crud.model.Account;
 import net.proselyte.crud.repository.AccountRepository;
 import net.proselyte.crud.repository.jdbc.JDBCAccountRepository;
+import net.proselyte.crud.util.ConnectorMySQL;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class AccountController {
     private AccountRepository accountRepository;
+    private Connection connection;
 
     public AccountController() throws SQLException {
-        accountRepository = new JDBCAccountRepository();
+        this.connection = new ConnectorMySQL().getConnection();
+        if (this.connection == null){
+            System.out.println("Warning! You don't have connection with MySQL");
+            return;
+        }else {
+            accountRepository = new JDBCAccountRepository(connection);
+        }
     }
 
     public void createTable() throws SQLException {

@@ -3,14 +3,23 @@ package net.proselyte.crud.controller;
 import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.repository.DeveloperRepository;
 import net.proselyte.crud.repository.jdbc.JDBCDeveloperRepository;
+import net.proselyte.crud.util.ConnectorMySQL;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DeveloperController {
     private DeveloperRepository developerRepository;
+    private Connection connection;
 
     public DeveloperController() throws SQLException {
-        developerRepository = new JDBCDeveloperRepository();
+        this.connection = new ConnectorMySQL().getConnection();
+        if (this.connection == null){
+            System.out.println("Warning! You don't have connection with MySQL");
+            return;
+        }else {
+            developerRepository = new JDBCDeveloperRepository(connection);
+        }
     }
 
     public void createTable() throws SQLException {

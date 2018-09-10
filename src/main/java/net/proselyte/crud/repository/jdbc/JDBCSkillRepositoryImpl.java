@@ -13,15 +13,14 @@ import java.sql.Statement;
 
 public class JDBCSkillRepositoryImpl implements SkillRepository {
     private Connection connection;
+    private Statement statement;
 
-    public JDBCSkillRepositoryImpl() throws SQLException {
-
+    public JDBCSkillRepositoryImpl(Connection connection) throws SQLException {
+        this.connection = connection;
     }
 
     @Override
     public void save(Skill skill) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "INSERT INTO SKILLS VALUES(" + skill.getId().intValue() + ",'" + skill.getName() + "')";
@@ -33,16 +32,11 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public void deleteById(Long aLong) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "DELETE FROM skills WHERE id = " + aLong.intValue();
@@ -54,16 +48,11 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public Skill getById(Long aLong) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "SELECT id,name FROM SKILLS WHERE id=" + aLong.intValue();
@@ -82,17 +71,12 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
             if (statement != null) {
                 statement.close();
             }
-            if (connection != null) {
-                connection.close();
-            }
         }
         return null;
     }
 
     @Override
     public void createTable() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "CREATE TABLE SKILLS (id int PRIMARY KEY UNIQUE , name VARCHAR(100))";
@@ -104,16 +88,11 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public void getAll() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         int temp =0;
         try {
             statement = connection.createStatement();
@@ -135,9 +114,6 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
         } finally {
             if (statement != null) {
                 statement.close();
-            }
-            if (connection != null) {
-                connection.close();
             }
         }
     }

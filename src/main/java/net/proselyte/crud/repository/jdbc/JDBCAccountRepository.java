@@ -12,37 +12,31 @@ import java.sql.Statement;
 
 public class JDBCAccountRepository implements AccountRepository {
     private Connection connection;
+    private Statement statement;
 
-    public JDBCAccountRepository(){
-
+    public JDBCAccountRepository(Connection connection){
+        this.connection = connection;
     }
 
     @Override
     public void save(Account account) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            String getSql = "INSERT INTO ACCOUNTS VALUES(" + account.getId().intValue() + ",'" + account.getAccountData() + "')";
-            statement.executeUpdate(getSql);
-            System.out.println("Operation save ACCOUNTS. Ok");
-        }catch (SQLException e){
-            System.out.println("Operation save ACCOUNTS. SQLException");
-        }finally{
-            if (statement != null){
-                statement.close();
+            try {
+                statement = connection.createStatement();
+                String getSql = "INSERT INTO ACCOUNTS VALUES(" + account.getId().intValue() + ",'" + account.getAccountData() + "')";
+                statement.executeUpdate(getSql);
+                System.out.println("Operation save ACCOUNTS. Ok");
+            }catch (SQLException e){
+                System.out.println("Operation save ACCOUNTS. SQLException");
+            }finally{
+                if (statement != null){
+                    statement.close();
+                }
             }
-            if (connection != null){
-                connection.close();
-            }
-        }
     }
 
     @Override
     public Account getById(Long aLong) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
-        try {
+            try {
             statement = connection.createStatement();
             String getSql = "SELECT id,accountData FROM ACCOUNTS WHERE id=" + aLong.intValue();
             ResultSet result = statement.executeQuery(getSql);
@@ -60,17 +54,12 @@ public class JDBCAccountRepository implements AccountRepository {
             if (statement != null) {
                 statement.close();
             }
-            if (connection != null) {
-                connection.close();
-            }
         }
         return null;
     }
 
     @Override
     public void deleteById(Long aLong) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "DELETE FROM ACCOUNTS WHERE id = " + aLong.intValue();
@@ -82,16 +71,11 @@ public class JDBCAccountRepository implements AccountRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public void createTable() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "CREATE TABLE ACCOUNTS (id int PRIMARY KEY UNIQUE , accountData VARCHAR(100))";
@@ -103,16 +87,11 @@ public class JDBCAccountRepository implements AccountRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public void getAll() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         int temp = 0;
         try {
             statement = connection.createStatement();
@@ -130,15 +109,11 @@ public class JDBCAccountRepository implements AccountRepository {
             if (temp ==0){
                 System.out.println("0 element's in ACCOUNTS ");
             }
-
         } catch (SQLException e) {
             System.out.println("Operation getAll ACCOUNTS . SQLException");
         } finally {
             if (statement != null) {
                 statement.close();
-            }
-            if (connection != null) {
-                connection.close();
             }
         }
     }

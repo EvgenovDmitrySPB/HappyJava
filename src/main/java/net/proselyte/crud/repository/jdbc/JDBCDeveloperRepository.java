@@ -20,11 +20,14 @@ import java.util.Set;
 
 public class JDBCDeveloperRepository implements DeveloperRepository {
     private Connection connection;
+    private Statement statement;
+
+    public JDBCDeveloperRepository(Connection connection){
+        this.connection = connection;
+    }
 
     @Override
     public void save(Developer developer) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "INSERT INTO developers VALUES(" + developer.getId().intValue() + ",'" + developer.getFirstName() +
@@ -38,16 +41,11 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public Developer getById(Long aLong) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         int temp = 0;
         try {
             statement = connection.createStatement();
@@ -105,17 +103,12 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             if (statement != null) {
                 statement.close();
             }
-            if (connection != null) {
-                connection.close();
-            }
         }
         return null;
     }
 
     @Override
     public void deleteById(Long aLong) throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "DELETE FROM developers WHERE id = " + aLong.intValue();
@@ -127,16 +120,11 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public void createTable() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         try {
             statement = connection.createStatement();
             String getSql = "CREATE TABLE DEVELOPERS (id int PRIMARY KEY UNIQUE, firstName VARCHAR(100), lastName VARCHAR(100), specialty VARCHAR(100), account LONG, skills VARCHAR(100))";
@@ -148,16 +136,11 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             if (statement != null){
                 statement.close();
             }
-            if (connection != null){
-                connection.close();
-            }
         }
     }
 
     @Override
     public void getAll() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
-        Statement statement = null;
         int temp = 0;
         try {
             statement = connection.createStatement();
@@ -217,9 +200,6 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         } finally {
             if (statement != null) {
                 statement.close();
-            }
-            if (connection != null) {
-                connection.close();
             }
         }
     }
