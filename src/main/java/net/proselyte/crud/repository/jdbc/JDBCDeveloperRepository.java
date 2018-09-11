@@ -8,10 +8,7 @@ import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 import net.proselyte.crud.repository.DeveloperRepository;
 import java.io.ByteArrayInputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,12 +53,17 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             statement = connection.createStatement();
 
             String getDev = "SELECT\n" +
-                    "  developers.id,\n" +
-                    "  developers.firstName,\n" +
-                    "  developers.lastName,\n" +
-                    "  developers.specialty,\n" +
-                    "  developers.account\n" +
-                    "FROM DEVELOPERS WHERE developers.id =" + aLong.intValue();
+                    "developers.id,\n" +
+                    "developers.firstName,\n" +
+                    "developers.lastName,\n" +
+                    "developers.specialty,\n" +
+                    "developers.account,\n" +
+                    "developer_skills.idSkill\n" +
+                    "FROM DEVELOPERS\n" +
+                    "LEFT JOIN developer_skills\n" +
+                    "  ON id =developer_skills.idDeveloper\n" +
+                    "WHERE developers.id =" + aLong.intValue() +
+                    " ORDER BY developers.id,developer_skills.idSkill";
 
             ResultSet resultDev = statement.executeQuery(getDev);
 
@@ -70,35 +72,29 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
 
             Set<Skill> skills = new HashSet<>();
             SkillController skillController = new SkillController();
+            long currentIdDev = 0;
 
             while (resultDev.next()) {
-                Long idDeveloper = resultDev.getLong(1);
+                long idDeveloper = resultDev.getLong(1);
                 String firstName = resultDev.getString(2);
                 String lastName  = resultDev.getString(3);
                 String specialty = resultDev.getString(4);
                 int idAccount    = resultDev.getInt(5);
+                int idSkill = resultDev.getInt(6);
 
                 account = accountController.getAccountById((long)idAccount);
-
-                //запрос к таблице developers_skill
-                String getDevSkill = "SELECT " +
-                        "developer_skills.idSkill " +
-                        "FROM developer_skills " +
-                        "WHERE developer_skills.idDeveloper = " + aLong.intValue() +
-                        " ORDER BY developer_skills.idSkill";
-                statement = connection.createStatement();
-                ResultSet resultDevSkill = statement.executeQuery(getDevSkill);
-                while (resultDevSkill.next()) {
-                    Long idSkill = resultDevSkill.getLong(1);
-                    skill   = skillController.getSkillById((long) idSkill);
-                    if (skill.getId() != null){
-                        skills.add(skill);
-                    }
+                skill   = skillController.getSkillById((long) idSkill);
+                if (skill.getId() != null){
+                    skills.add(skill);
                 }
 
-                developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                        withAccount(account).withSkill(skills);
-                developer = developerBuilder.toDeveloper();
+                if (currentIdDev != idDeveloper){
+                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
+                            withAccount(account).withSkill(skills);
+                    developer = developerBuilder.toDeveloper();
+                    skills.clear();
+                    currentIdDev = idDeveloper;
+                }
             }
         } catch (SQLException e) {
             System.out.println("Operation getAll DEVELOPERS . SQLException");
@@ -136,60 +132,56 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             statement = connection.createStatement();
 
             String getDev = "SELECT\n" +
-                    "  developers.id,\n" +
-                    "  developers.firstName,\n" +
-                    "  developers.lastName,\n" +
-                    "  developers.specialty,\n" +
-                    "  developers.account\n" +
-                    "FROM DEVELOPERS";
+                    "developers.id,\n" +
+                    "developers.firstName,\n" +
+                    "developers.lastName,\n" +
+                    "developers.specialty,\n" +
+                    "developers.account,\n" +
+                    "developer_skills.idSkill\n" +
+                    "FROM DEVELOPERS\n" +
+                    "LEFT JOIN developer_skills\n" +
+                    "  ON id =developer_skills.idDeveloper\n" +
+                    "ORDER BY developers.id,developer_skills.idSkill";
 
             ResultSet resultDev = statement.executeQuery(getDev);
 
             DeveloperBuilder developerBuilder = new DeveloperBuilder();
-
+            Developer developer = null;
             AccountController accountController = new AccountController();
             Account account = null;
 
             Set<Skill> skills = new HashSet<>();
             SkillController skillController = new SkillController();
             Skill skill = null;
+            long currentIdDev = 0;
 
             while (resultDev.next()) {
-                Long idDeveloper = resultDev.getLong(1);
+                long idDeveloper = resultDev.getLong(1);
                 String firstName = resultDev.getString(2);
                 String lastName  = resultDev.getString(3);
                 String specialty = resultDev.getString(4);
                 int idAccount    = resultDev.getInt(5);
+                int idSkill = resultDev.getInt(6);
 
                 account = accountController.getAccountById((long)idAccount);
-
-                //запрос к таблице developers_skill
-                String getDevSkill = "SELECT " +
-                        "developer_skills.idSkill " +
-                        "FROM developer_skills " +
-                        "WHERE developer_skills.idDeveloper = " + idDeveloper.intValue() +
-                        " ORDER BY developer_skills.idSkill";
-                statement = connection.createStatement();
-                ResultSet resultDevSkill = statement.executeQuery(getDevSkill);
-                while (resultDevSkill.next()) {
-                    Long idSkill = resultDevSkill.getLong(1);
-                    skill   = skillController.getSkillById((long) idSkill);
-                    if (skill.getId() != null){
-                        skills.add(skill);
-                    }
+                skill   = skillController.getSkillById((long) idSkill);
+                if (skill.getId() != null){
+                    skills.add(skill);
                 }
 
-                developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                        withAccount(account).withSkill(skills);
-                Developer developer = developerBuilder.toDeveloper();
-                System.out.println(developer.toString());
-                skills.clear();
-                temp++;
+                if (currentIdDev != idDeveloper){
+                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
+                            withAccount(account).withSkill(skills);
+                    developer = developerBuilder.toDeveloper();
+                    System.out.println(developer.toString());
+                    skills.clear();
+                    temp++;
+                    currentIdDev = idDeveloper;
+                }
             }
             if (temp ==0){
                 System.out.println("0 element's in DEVELOPERS ");
             }
-
         } catch (SQLException e) {
             System.out.println("Operation getAll DEVELOPERS . SQLException");
         } finally {
