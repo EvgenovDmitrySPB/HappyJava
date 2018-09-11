@@ -46,7 +46,7 @@ public class DeveloperView {
             if (account.getId() == null){
                 System.out.println("Account with id=" + accountId + " not exist!");
             }
-            System.out.println("Do you want to enter more/other account ? 1 - yes, 2- no");
+            System.out.println("Do you want to enter other account ? 1 - yes, 2- no");
             Scanner scanner3 = new Scanner(System.in);
             int repeatInt = scanner3.nextInt();
             if (repeatInt != 1){
