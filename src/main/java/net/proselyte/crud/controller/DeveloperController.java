@@ -22,7 +22,6 @@ public class DeveloperController {
         }
     }
 
-
     public void saveDeveloper(Developer developer) throws SQLException {
         if(developer == null){
             throw new IllegalArgumentException();
