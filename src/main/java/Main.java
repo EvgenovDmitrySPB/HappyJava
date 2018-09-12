@@ -1,18 +1,11 @@
-import net.proselyte.crud.model.Skill;
-import net.proselyte.crud.util.ConnectorMySQL;
+
 import net.proselyte.crud.view.AccountView;
 import net.proselyte.crud.view.DeveloperView;
 import net.proselyte.crud.view.SkillView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws SQLException, IOException {
+    public static void main(String[] args) throws Exception {
 
         //Comment 3
         SkillView skillView = new SkillView();

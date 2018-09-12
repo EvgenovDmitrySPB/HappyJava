@@ -9,7 +9,6 @@ import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
