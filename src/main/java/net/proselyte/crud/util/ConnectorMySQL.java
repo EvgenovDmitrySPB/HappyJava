@@ -33,13 +33,13 @@ public class ConnectorMySQL {
             Properties prop = new Properties();
             prop.load(fis);
 
-            StringBuilder url = new StringBuilder();
-            url.    append(prop.getProperty("url")+ "?").           //host name + port + dbName
-                    append("user=" + prop.getProperty("username")+ "&").           //login
-                    append("password=" + prop.getProperty("password"));      //password
+//            StringBuilder url = new StringBuilder();
+//            url.    append(prop.getProperty("url")+ "?").           //host name + port + dbName
+//                    append("user=" + prop.getProperty("username")+ "&").           //login
+//                    append("password=" + prop.getProperty("password"));      //password
 
             try {
-                connectMySql = DriverManager.getConnection(url.toString());
+                connectMySql = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
                // System.out.println("Connected by mySQL ...");
             }catch(SQLException e){
                 System.out.println("SQLException");

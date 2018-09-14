@@ -1,5 +1,3 @@
-package main;
-
 import net.proselyte.crud.view.AccountView;
 import net.proselyte.crud.view.DeveloperView;
 import net.proselyte.crud.view.SkillView;

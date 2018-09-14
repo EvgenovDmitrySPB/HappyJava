@@ -16,19 +16,27 @@ public class Account {
         this.accountData = accountData;
     }
 
-//    public String getAccountData() {
-//        return accountData;
-//    }
-//
-//    public void setAccountData(String accountData) {
-//        this.accountData = accountData;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Account{" +
-//                "id=" + id +
-//                ", accountData='" + accountData + '\'' +
-//                '}';
-//    }
+    public String getAccountData() {
+        return accountData;
+    }
+
+    public void setAccountData(String accountData) {
+        this.accountData = accountData;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", accountData='" + accountData + '\'' +
+                '}';
+    }
 }
