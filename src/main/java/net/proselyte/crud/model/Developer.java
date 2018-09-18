@@ -1,10 +1,7 @@
 package net.proselyte.crud.model;
 
-import lombok.Data;
-
 import java.util.Set;
 
-@Data
 public class Developer {
     Long id;
     String firstName;

@@ -11,4 +11,6 @@ public interface GenericRepository<T, ID> {
     void deleteById(ID id) throws SQLException;
 
     void getAll() throws SQLException;
+
+    void update(ID id) throws SQLException;
 }

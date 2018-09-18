@@ -1,46 +1,48 @@
 package net.proselyte.crud.util;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectorMySQL {
-    private final Connection connection;
+public final class ConnectorMySQL {
     private static final String PATH = "src\\main\\resources\\liquibase\\liquibase.properties";
+    private static ConnectorMySQL INSTANCE = null;
+    private static Connection CONNECTION = getMySqlJDBCConnection();
 
-    public ConnectorMySQL() {
-        this.connection = getMySqlConnection();
-        //printConnectInfo();
+    public static ConnectorMySQL getInstance(){
+        if (INSTANCE == null){
+            INSTANCE = new ConnectorMySQL();
+        }
+        return INSTANCE;
     }
 
+    //класс создан по паттерну Singleton и конструктор не нужен
+//    public ConnectorMySQL() {
+//        this.CONNECTION = getMySqlConnection();
+//        //printConnectInfo();
+//    }
+
     public Connection getConnection(){
-        if (connection != null){
-            return connection;
+        if (CONNECTION != null){
+            return CONNECTION;
         }else{
             return null;
         }
     }
 
-    private Connection getMySqlConnection() {
+    private static Connection getMySqlJDBCConnection() {
         Connection connectMySql = null;
         try {
             FileInputStream fis = new FileInputStream(PATH);
-
             Properties prop = new Properties();
             prop.load(fis);
 
-//            StringBuilder url = new StringBuilder();
-//            url.    append(prop.getProperty("url")+ "?").           //host name + port + dbName
-//                    append("user=" + prop.getProperty("username")+ "&").           //login
-//                    append("password=" + prop.getProperty("password"));      //password
-
             try {
                 connectMySql = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
-               // System.out.println("Connected by mySQL ...");
+                System.out.println("Connected to the mySQL on [JDBC] ...");
             }catch(SQLException e){
                 System.out.println("SQLException");
             }
@@ -51,13 +53,13 @@ public class ConnectorMySQL {
         return connectMySql;
     }
     private void printConnectInfo() {
-        if (connection != null){
+        if (CONNECTION != null){
             try {
                 System.out.println("*************  Connection has done. Properties *************");
-                System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
-                System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
-                System.out.println("Driver: " + connection.getMetaData().getDriverName());
-                System.out.println("Autocommit: " + connection.getAutoCommit());
+                System.out.println("DB name: " + CONNECTION.getMetaData().getDatabaseProductName());
+                System.out.println("DB version: " + CONNECTION.getMetaData().getDatabaseProductVersion());
+                System.out.println("Driver: " + CONNECTION.getMetaData().getDriverName());
+                System.out.println("Autocommit: " + CONNECTION.getAutoCommit());
                 System.out.println("************************************************************");
             } catch (SQLException e) {
                 System.out.println("SQLException");

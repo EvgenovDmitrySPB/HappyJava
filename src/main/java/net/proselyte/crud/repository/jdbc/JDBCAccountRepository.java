@@ -99,4 +99,10 @@ public class JDBCAccountRepository implements AccountRepository {
             }
         }
     }
+
+
+    @Override
+    public void update(Long aLong) throws SQLException {
+
+    }
 }

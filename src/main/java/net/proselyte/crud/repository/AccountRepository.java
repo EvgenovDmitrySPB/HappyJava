@@ -16,4 +16,7 @@ public interface AccountRepository extends GenericRepository<Account, Long>{
 
     @Override
     void getAll() throws SQLException;
+
+    @Override
+    void update(Long aLong) throws SQLException;
 }

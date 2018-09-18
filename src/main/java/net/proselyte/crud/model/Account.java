@@ -1,10 +1,15 @@
 package net.proselyte.crud.model;
 
-import lombok.Data;
+import javax.persistence.*;
 
-@Data
+@Entity
+@Table(name = "accounts")
 public class Account {
+    @Id
+    @Column(name = "id",unique = true,nullable = false,length = 5)
     private Long id;
+
+    @Column(name="name",unique = true,nullable = false)
     private String accountData;
 
     public Account(){

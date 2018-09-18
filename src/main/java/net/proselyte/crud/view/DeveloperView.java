@@ -5,6 +5,7 @@ import net.proselyte.crud.controller.AccountController;
 import net.proselyte.crud.controller.DeveloperController;
 import net.proselyte.crud.controller.SkillController;
 import net.proselyte.crud.model.Account;
+import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 
 public class DeveloperView {
     private DeveloperController developerController;
+    private ConnectType connectType;
 
     public DeveloperView() throws SQLException {
         developerController = new DeveloperController();
@@ -34,7 +36,7 @@ public class DeveloperView {
         String specialty = scanner2.next();
 
         boolean repeatAccount = true;
-        AccountController accountController = new AccountController();
+        AccountController accountController;
         Account account = null;
 
         while (repeatAccount){

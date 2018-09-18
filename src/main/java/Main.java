@@ -1,3 +1,5 @@
+import net.proselyte.crud.model.ConnectType;
+import net.proselyte.crud.util.SelectConnection;
 import net.proselyte.crud.view.AccountView;
 import net.proselyte.crud.view.DeveloperView;
 import net.proselyte.crud.view.SkillView;
@@ -6,17 +8,35 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        //Comment 3
-        SkillView skillView = new SkillView();
-        AccountView accountView = new AccountView();
-        DeveloperView developerView = new DeveloperView();
-
         Scanner scannerSkill     = new Scanner(System.in);
         Scanner scannerAccount   = new Scanner(System.in);
         Scanner scannerDeveloper = new Scanner(System.in);
 
+        //Выбор типа соединения с БД
+        boolean repeatTypeConnect = true;
+        while (repeatTypeConnect){
+            Scanner scannerTypeConnect= new Scanner(System.in);
+            System.out.println("Enter system for connecting: 1 - JDBC; 2 - Hibernate ");
+            int resultJorH = scannerTypeConnect.nextInt();
+
+            //создаем класс SelectConnection[Singleton], который хранит глобальную переменную о типе соединения с БД,
+            // чтобы не прокидывать её по всем классам
+            if (resultJorH == 1){
+                SelectConnection.getInstance().setConnectType(ConnectType.JDBC);
+                repeatTypeConnect = false;
+            }else if (resultJorH == 2){
+                SelectConnection.getInstance().setConnectType(ConnectType.HIBERNATE);
+                repeatTypeConnect = false;
+            }
+        }
+
+        SkillView skillView         = new SkillView();
+        AccountView accountView     = new AccountView();
+        DeveloperView developerView = new DeveloperView();
+
+
+
         Scanner scannerAll = new Scanner(System.in);
-        //from home
 
         boolean repeatAll = true;
         while(repeatAll){
@@ -36,6 +56,12 @@ public class Main {
                 } else if (resultScanner == 4) {
                     skillView.getAllSkill();
                 }
+                System.out.println("Do you want to repeat ? 1 - yes, 2- no");
+                Scanner scanner3 = new Scanner(System.in);
+                int repeatInt = scanner3.nextInt();
+                if (repeatInt != 1) {
+                    repeatAll = false;
+                }
             }
             if (resultAll == 2) {
                 //Accounts
@@ -50,6 +76,12 @@ public class Main {
                     accountView.deleteById();
                 } else if (resultAccount == 4) {
                     accountView.getAllAccount();
+                }
+                System.out.println("Do you want to repeat ? 1 - yes, 2- no");
+                Scanner scanner3 = new Scanner(System.in);
+                int repeatInt = scanner3.nextInt();
+                if (repeatInt != 1) {
+                    repeatAll = false;
                 }
             }
             if (resultAll == 3) {

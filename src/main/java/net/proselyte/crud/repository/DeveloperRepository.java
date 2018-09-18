@@ -15,4 +15,7 @@ public interface DeveloperRepository extends GenericRepository<Developer, Long> 
 
     @Override
     void getAll() throws SQLException;
+
+    @Override
+    void update(Long aLong) throws SQLException;
 }

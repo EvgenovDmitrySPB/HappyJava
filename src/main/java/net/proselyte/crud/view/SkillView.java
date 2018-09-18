@@ -2,6 +2,7 @@ package net.proselyte.crud.view;
 
 import net.proselyte.crud.builders.SkillBuilder;
 import net.proselyte.crud.controller.SkillController;
+import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Skill;
 
 import java.io.BufferedReader;

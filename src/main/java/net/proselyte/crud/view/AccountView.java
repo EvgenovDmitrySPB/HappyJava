@@ -3,6 +3,7 @@ package net.proselyte.crud.view;
 import net.proselyte.crud.builders.AccountBuilder;
 import net.proselyte.crud.controller.AccountController;
 import net.proselyte.crud.model.Account;
+import net.proselyte.crud.model.ConnectType;
 
 import java.io.BufferedReader;
 import java.io.IOException;

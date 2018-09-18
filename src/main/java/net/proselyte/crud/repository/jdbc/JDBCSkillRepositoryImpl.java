@@ -98,4 +98,9 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
             }
         }
     }
+
+    @Override
+    public void update(Long aLong) throws SQLException {
+
+    }
 }

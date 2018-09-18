@@ -1,8 +1,5 @@
 package net.proselyte.crud.model;
 
-import lombok.Data;
-
-@Data
 public class Skill {
     private Long id;
     private String name;

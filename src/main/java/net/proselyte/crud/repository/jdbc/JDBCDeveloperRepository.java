@@ -190,4 +190,9 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             }
         }
     }
+
+    @Override
+    public void update(Long aLong) throws SQLException {
+
+    }
 }

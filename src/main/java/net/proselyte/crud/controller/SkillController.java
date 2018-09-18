@@ -1,5 +1,6 @@
 package net.proselyte.crud.controller;
 
+import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Skill;
 import net.proselyte.crud.repository.SkillRepository;
 import net.proselyte.crud.repository.jdbc.JDBCSkillRepositoryImpl;
@@ -12,9 +13,10 @@ public class SkillController {
 
     private SkillRepository skillRepository;
     private Connection connection;
+    private ConnectType connectType;
 
     public SkillController() throws SQLException {
-        this.connection = new ConnectorMySQL().getConnection();
+        this.connection = ConnectorMySQL.getInstance().getConnection();
         if (this.connection == null){
             System.out.println("Warning! You don't have connection with MySQL");
             return;
