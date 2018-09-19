@@ -25,7 +25,7 @@ public class AccountBuilder {
 
     public Account getAccount(){
         AccountBuilder accountBuilder =
-        new AccountBuilder().withId(1L).withAccount("Test account");
+        new AccountBuilder().withId(1L).withAccount("pojo account");
         return accountBuilder.toAccount();
     }
 }

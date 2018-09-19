@@ -20,10 +20,14 @@ public class Developer {
     @Column(name="specialty", length = 100)
     String specialty;
 
-    @OneToOne(mappedBy = "Account")
+    @Column(name="account", length = 100)
     Account account;
 
-    @OneToMany(mappedBy = "developers", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "developer_skills",
+            joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
     Set<Skill> skills;
 
     public Developer(){

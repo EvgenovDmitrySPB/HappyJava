@@ -52,7 +52,7 @@ public class DeveloperBuilder  {
         setSkill.add(new Skill(3L,"Java programmer"));
 
         DeveloperBuilder developerBuilder = new DeveloperBuilder()
-                .withId(1L).withFirstName("Test").
+                .withId(1L).withFirstName("pojo").
                         withLastName("TestFamily").
                         withSpecialty("Testers").
                         withAccount(new Account(1L,"Tester")).

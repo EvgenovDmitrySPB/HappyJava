@@ -30,9 +30,9 @@ public class Main {
             }
         }
 
-        SkillView skillView         = new SkillView();
-        AccountView accountView     = new AccountView();
-        DeveloperView developerView = null;//new DeveloperView();
+        SkillView skillView         = null; //new SkillView();
+        AccountView accountView     = null; //new AccountView();
+        DeveloperView developerView = new DeveloperView();
 
         Scanner scannerAll = new Scanner(System.in);
 
