@@ -5,6 +5,7 @@ import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.repository.DeveloperRepository;
 import net.proselyte.crud.repository.hibernate.HibernateDeveloperRepository;
 import net.proselyte.crud.repository.jdbc.JDBCDeveloperRepository;
+import net.proselyte.crud.util.ConnectorHibernateMySQL;
 import net.proselyte.crud.util.ConnectorMySQL;
 import net.proselyte.crud.util.SelectConnection;
 import org.hibernate.SessionFactory;
@@ -20,18 +21,20 @@ public class DeveloperController {
     public DeveloperController() throws SQLException {
         if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
             this.connection = ConnectorMySQL.getInstance().getConnection();
-        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
-            //this.sessionFactory = ConnectorMySQL.getInstance();
-        }
 
-        if (this.connection == null){
-            System.out.println("Warning! You don't have connection with MySQL");
-            return;
-        }else {
-            if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+            if (this.connection == null){
+                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
+                return;
+            }else {
                 developerRepository = new JDBCDeveloperRepository(connection);
-            }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
-                //developerRepository = new HibernateDeveloperRepository(connection);
+            }
+        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
+            if (this.sessionFactory == null){
+                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
+                return;
+            }else {
+                developerRepository = new HibernateDeveloperRepository(sessionFactory);
             }
         }
     }

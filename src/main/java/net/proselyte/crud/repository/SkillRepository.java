@@ -16,4 +16,7 @@ public interface SkillRepository extends GenericRepository<Skill, Long >{
 
     @Override
     void getAll() throws SQLException;
+
+    @Override
+    void update(Long aLong) throws SQLException;
 }

@@ -3,6 +3,7 @@ package net.proselyte.crud.controller;
 import net.proselyte.crud.model.Account;
 import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.repository.AccountRepository;
+import net.proselyte.crud.repository.hibernate.HibernateAccountRepository;
 import net.proselyte.crud.repository.jdbc.JDBCAccountRepository;
 import net.proselyte.crud.util.ConnectorHibernateMySQL;
 import net.proselyte.crud.util.ConnectorMySQL;
@@ -20,18 +21,22 @@ public class AccountController {
     public AccountController() throws SQLException {
         if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
             this.connection = ConnectorMySQL.getInstance().getConnection();
+
             if (this.connection == null){
-                System.out.println("Warning! You don't have connection with MySQL");
+                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
                 return;
             }else {
                 accountRepository = new JDBCAccountRepository(connection);
             }
-
         }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
             this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
-
+            if (this.sessionFactory == null){
+                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
+                return;
+            }else {
+                accountRepository = new HibernateAccountRepository(sessionFactory);
+            }
         }
-
     }
 
     public void saveAccount(Account Account) throws SQLException {

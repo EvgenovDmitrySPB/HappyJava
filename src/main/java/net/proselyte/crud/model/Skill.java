@@ -1,7 +1,19 @@
 package net.proselyte.crud.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "skills")
 public class Skill {
+
+    @Id
+    @Column(name = "id",unique = true,nullable = false,length = 5)
     private Long id;
+
+    @Column(name="name")
     private String name;
 
     public Skill() {

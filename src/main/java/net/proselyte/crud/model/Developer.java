@@ -1,17 +1,39 @@
 package net.proselyte.crud.model;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "developers")
 public class Developer {
+
+    @Id
+    @Column(name = "id",unique = true,nullable = false,length = 5)
     Long id;
+
+    @Column(name="firstName", length = 100)
     String firstName;
+
+    @Column(name="lastName", length = 100)
     String lastName;
+
+    @Column(name="specialty", length = 100)
     String specialty;
+
+    @OneToOne(mappedBy = "Account")
     Account account;
+
+    @OneToMany(mappedBy = "developers", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Skill> skills;
 
     public Developer(){
 
+    }
+
+    public void removeRole(Skill skill){getSkills().remove(skill);}
+    public void addRole(Skill skill){
+        //skill.setSkills(this);
+        getSkills().add(skill);
     }
 
     public Developer(Long id, String firstName, String lastName, String specialty, Account account, Set<Skill> skills){

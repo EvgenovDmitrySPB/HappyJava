@@ -86,6 +86,7 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
                 skillBuilder.withId(id).withName(name);
                 Skill skill = skillBuilder.toSkill();
                 System.out.println(skill.toString());
+                temp++;
             }
             if (temp ==0){
                 System.out.println("0 element's in SKILLS");
@@ -103,4 +104,6 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
     public void update(Long aLong) throws SQLException {
 
     }
+
+
 }

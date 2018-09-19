@@ -9,7 +9,7 @@ public class Account {
     @Column(name = "id",unique = true,nullable = false,length = 5)
     private Long id;
 
-    @Column(name="name",unique = true,nullable = false)
+    @Column(name="accountData")
     private String accountData;
 
     public Account(){

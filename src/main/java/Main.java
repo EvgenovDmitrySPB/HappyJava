@@ -32,9 +32,7 @@ public class Main {
 
         SkillView skillView         = new SkillView();
         AccountView accountView     = new AccountView();
-        DeveloperView developerView = new DeveloperView();
-
-
+        DeveloperView developerView = null;//new DeveloperView();
 
         Scanner scannerAll = new Scanner(System.in);
 
