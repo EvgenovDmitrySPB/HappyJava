@@ -61,4 +61,18 @@ public class SkillView {
     public void getAllSkill(){
         skillController.getAll();
     }
+
+    public void updateSkill() throws IOException{
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.println("Please enter id for update:");
+        Long id = scanner2.nextLong();
+        System.out.println("Please enter new name:");
+        BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+        String name = " ";
+        if ((name = bufReader.readLine()) != null);
+
+        SkillBuilder skillBuilder = new SkillBuilder();
+        skillBuilder.withId(id).withName(name);
+        skillController.updateSkill(skillBuilder.toSkill());
+    }
 }

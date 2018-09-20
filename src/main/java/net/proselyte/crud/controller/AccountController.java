@@ -56,4 +56,8 @@ public class AccountController {
 
         accountRepository.getAll();
     }
+
+    public void updateAccount(Account account) {
+        accountRepository.update(account);
+    }
 }

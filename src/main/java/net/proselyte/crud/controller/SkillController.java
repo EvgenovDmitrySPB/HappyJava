@@ -64,4 +64,7 @@ public class SkillController {
         skillRepository.getAll();
     }
 
+    public void updateSkill(Skill skill) {
+        skillRepository.update(skill);
+    }
 }

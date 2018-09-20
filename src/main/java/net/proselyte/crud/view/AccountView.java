@@ -57,4 +57,18 @@ public class AccountView {
     public void getAllAccount(){
         accountController.getAll();
     }
+
+    public void updateAccount() throws IOException{
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.println("Please enter id for update:");
+        Long id = scanner2.nextLong();
+        System.out.println("Please enter new accountData:");
+        BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+        String accountData = " ";
+        if ((accountData = bufReader.readLine()) != null);
+
+        AccountBuilder skillBuilder = new AccountBuilder();
+        skillBuilder.withId(id).withAccount(accountData);
+        accountController.updateAccount(skillBuilder.toAccount());
+    }
 }

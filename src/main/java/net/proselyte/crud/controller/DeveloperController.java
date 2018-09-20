@@ -63,4 +63,8 @@ public class DeveloperController {
 
         developerRepository.getAll();
     }
+
+    public void updateDeveloper(Developer developer) {
+        developerRepository.update(developer);
+    }
 }

@@ -9,6 +9,9 @@ import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -101,5 +104,20 @@ public class DeveloperView {
 
     public void getAllDeveloper(){
         developerController.getAll();
+    }
+
+    public void updateDeveloper() throws IOException {
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.println("Please enter id for update:");
+        Long id = scanner2.nextLong();
+        System.out.println("Please enter new firstName:");
+        BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+        String firstName = " ";
+        if ((firstName = bufReader.readLine()) != null);
+
+        DeveloperBuilder skillBuilder = new DeveloperBuilder();
+        skillBuilder.withId(id).withFirstName(firstName);
+        developerController.updateDeveloper(skillBuilder.toDeveloper());
+
     }
 }

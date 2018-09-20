@@ -85,6 +85,14 @@ public class HibernateSkillRepository implements SkillRepository {
 
     @Override
     public void update(Skill skill) {
-
+        try{
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(skill);
+            session.getTransaction().commit();
+            System.out.println("Operation update SKILL. Ok");
+        }catch (HibernateException e){
+            System.out.println("Operation update SKILL. HibernateException");
+        }
     }
 }

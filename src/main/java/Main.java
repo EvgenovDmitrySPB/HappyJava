@@ -45,7 +45,7 @@ public class Main {
             int resultAll = scannerAll.nextInt();
             if (resultAll == 1) {
                 // SKILLS
-                System.out.println("Enter number operation. 1 - save Skill; 2 - get Skill by id; 3 - delete Account by id; 4 - GET all Skills ");
+                System.out.println("Enter number operation. 1 - save Skill; 2 - get Skill by id; 3 - delete Account by id; 4 - GET all Skills; 5 - Update skill ");
                 int resultScanner = scannerSkill.nextInt();
 
                 if (resultScanner == 1) {
@@ -56,6 +56,8 @@ public class Main {
                     skillView.deleteById();
                 } else if (resultScanner == 4) {
                     skillView.getAllSkill();
+                }else if (resultScanner == 5) {
+                    skillView.updateSkill();
                 }
                 System.out.println("Do you want to repeat ? 1 - yes, 2- no");
                 scannerRepeat = new Scanner(System.in);
@@ -65,7 +67,7 @@ public class Main {
             }
             if (resultAll == 2) {
                 //Accounts
-                System.out.println("Enter number operation. 1 - save Account; 2 - get Account by id; 3 - delete Account by id; 4 - GET all Accounts ");
+                System.out.println("Enter number operation. 1 - save Account; 2 - get Account by id; 3 - delete Account by id; 4 - GET all Accounts; 5 - Update Account ");
                 int resultAccount = scannerAccount.nextInt();
 
                 if (resultAccount == 1) {
@@ -76,6 +78,8 @@ public class Main {
                     accountView.deleteById();
                 } else if (resultAccount == 4) {
                     accountView.getAllAccount();
+                }else if (resultAccount == 5) {
+                    accountView.updateAccount();
                 }
                 System.out.println("Do you want to repeat ? 1 - yes, 2- no");
                 scannerRepeat = new Scanner(System.in);
@@ -85,7 +89,7 @@ public class Main {
             }
             if (resultAll == 3) {
                 //Developers
-                System.out.println("Enter number operation. 1 - save Developer; 2 - get Developer by id; 3 - delete Developer by id; 4 - GET all Developer ");
+                System.out.println("Enter number operation. 1 - save Developer; 2 - get Developer by id; 3 - delete Developer by id; 4 - GET all Developer; 5 - Update Account ");
                 int resultDeveloper = scannerDeveloper.nextInt();
 
                 if (resultDeveloper == 1) {
@@ -96,6 +100,8 @@ public class Main {
                     developerView.deleteById();
                 } else if (resultDeveloper == 4) {
                     developerView.getAllDeveloper();
+                }else if (resultDeveloper == 5) {
+                    developerView.updateDeveloper();
                 }
                 System.out.println("Do you want to repeat ? 1 - yes, 2- no");
                 scannerRepeat = new Scanner(System.in);

@@ -85,6 +85,14 @@ public class HibernateAccountRepository implements AccountRepository {
 
     @Override
     public void update(Account account) {
-
+        try{
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(account);
+            session.getTransaction().commit();
+            System.out.println("Operation update ACCOUNT. Ok");
+        }catch (HibernateException e){
+            System.out.println("Operation update ACCOUNT. HibernateException");
+        }
     }
 }

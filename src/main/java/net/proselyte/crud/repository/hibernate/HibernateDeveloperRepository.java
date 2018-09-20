@@ -85,6 +85,14 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
 
     @Override
     public void update(Developer developer) {
-
+        try{
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(developer);
+            session.getTransaction().commit();
+            System.out.println("Operation update DEVELOPER. Ok");
+        }catch (HibernateException e){
+            System.out.println("Operation update DEVELOPER. HibernateException");
+        }
     }
 }

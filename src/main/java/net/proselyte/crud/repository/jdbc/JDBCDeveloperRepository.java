@@ -173,6 +173,13 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
 
     @Override
     public void update(Developer developer) {
+        try (Statement statement = connection.createStatement()){
+            String getSql = "UPDATE developers set firstName = '" + developer.getFirstName() + "' WHERE id=" + developer.getId();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation update DEVELOPER.");
+        } catch (SQLException e) {
+            System.out.println("Operation update DEVELOPER. SQLException");
+        }
 
     }
 }

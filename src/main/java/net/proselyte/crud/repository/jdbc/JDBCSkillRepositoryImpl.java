@@ -82,6 +82,12 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public void update(Skill skill) {
-
+        try (Statement statement = connection.createStatement()){
+            String getSql = "UPDATE skills set name = '" + skill.getName() + "' WHERE id=" + skill.getId();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation update SKILLS.");
+        } catch (SQLException e) {
+            System.out.println("Operation update SKILLS. SQLException");
+        }
     }
 }

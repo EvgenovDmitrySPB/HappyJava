@@ -83,6 +83,12 @@ public class JDBCAccountRepository implements AccountRepository {
 
     @Override
     public void update(Account account) {
-
+        try (Statement statement = connection.createStatement()){
+            String getSql = "UPDATE accounts set accountData = '" + account.getAccountData() + "' WHERE id=" + account.getId();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation update ACCOUNT.");
+        } catch (SQLException e) {
+            System.out.println("Operation update ACCOUNT. SQLException");
+        }
     }
 }
