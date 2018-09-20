@@ -16,11 +16,11 @@ public class SkillView {
 
     private SkillController skillController;
 
-    public SkillView() throws SQLException {
+    public SkillView(){
         skillController = new SkillController();
     }
 
-    public void saveSkill() throws SQLException, IOException {
+    public void saveSkill() throws IOException {
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
@@ -37,7 +37,7 @@ public class SkillView {
         skillController.saveSkill(skillBuilder.toSkill());
     }
 
-    public void getSkillById() throws SQLException {
+    public void getSkillById(){
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
@@ -50,7 +50,7 @@ public class SkillView {
         }
     }
 
-    public void deleteById() throws SQLException{
+    public void deleteById(){
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id for delete:");
         Long id = scanner2.nextLong();
@@ -58,7 +58,7 @@ public class SkillView {
         skillController.deleteById(id);
     }
 
-    public void getAllSkill() throws SQLException {
+    public void getAllSkill(){
         skillController.getAll();
     }
 }

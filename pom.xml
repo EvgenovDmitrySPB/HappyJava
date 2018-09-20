@@ -13,6 +13,7 @@
         <maven.compiler.target>1.9</maven.compiler.target>
         <mysqlConnectorVersion>5.1.35</mysqlConnectorVersion>
         <lombokVersion>1.16.18</lombokVersion>
+        <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
     </properties>
 
     <build>
@@ -23,7 +24,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>main.Main</mainClass>
+                            <mainClass>Main</mainClass>
                         </manifest>
                     </archive>
                     <finalName>happyJavaJar</finalName>
@@ -55,7 +56,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>main.Main</mainClass>
+                            <mainClass>Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -94,6 +95,11 @@
             <artifactId>lombok</artifactId>
             <version>${lombokVersion}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${org.hibernate.hibernate-core.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -10,13 +10,12 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">123456</property>
         <property name="hibernate.hibernate_show_sql">true</property>
-        <property name="hibernate.hibernate_hbm2ddl_auto">update</property>
+        <property name="hibernate.hibernate_hbm2ddl_auto">validate</property>
 
-        <mapping class="net.proselyte.crud.model.pojo.Accounts"/>
-        <mapping class="net.proselyte.crud.model.pojo.Developers"/>
-        <mapping class="net.proselyte.crud.model.pojo.Skills"/>
+        <mapping class="net.proselyte.crud.model.Account"/>
+        <mapping class="net.proselyte.crud.model.Skill"/>
+        <mapping class="net.proselyte.crud.model.Developer"/>
 
         <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

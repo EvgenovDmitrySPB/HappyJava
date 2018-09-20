@@ -16,13 +16,12 @@ import java.util.Set;
 
 public class DeveloperView {
     private DeveloperController developerController;
-    private ConnectType connectType;
 
-    public DeveloperView() throws SQLException {
+    public DeveloperView(){
         developerController = new DeveloperController();
     }
 
-    public void saveDeveloper() throws SQLException {
+    public void saveDeveloper(){
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
@@ -49,8 +48,7 @@ public class DeveloperView {
             }
             System.out.println("Do you want to enter other account ? 1 - yes, 2- no");
             Scanner scanner3 = new Scanner(System.in);
-            int repeatInt = scanner3.nextInt();
-            if (repeatInt != 1){
+            if (scanner3.nextInt() != 1){
                 repeatAccount = false;
             }
         }
@@ -70,8 +68,7 @@ public class DeveloperView {
             }
             System.out.println("Do you want to enter more/other  skill ? 1 - yes, 2- no");
             Scanner scanner4 = new Scanner(System.in);
-            int repeatInt = scanner4.nextInt();
-            if (repeatInt != 1){
+            if (scanner4.nextInt() != 1){
                 repeatSkill = false;
             }
         }
@@ -81,7 +78,7 @@ public class DeveloperView {
         developerController.saveDeveloper(developerBuilder.toDeveloper());
     }
 
-    public void getDeveloperById() throws SQLException {
+    public void getDeveloperById() {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
@@ -94,7 +91,7 @@ public class DeveloperView {
         }
     }
 
-    public void deleteById() throws SQLException{
+    public void deleteById(){
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id for delete:");
         Long id = scanner2.nextLong();
@@ -102,7 +99,7 @@ public class DeveloperView {
         developerController.deleteById(id);
     }
 
-    public void getAllDeveloper() throws SQLException {
+    public void getAllDeveloper(){
         developerController.getAll();
     }
 }

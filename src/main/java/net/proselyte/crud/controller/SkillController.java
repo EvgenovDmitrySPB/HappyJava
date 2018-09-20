@@ -11,16 +11,14 @@ import net.proselyte.crud.util.SelectConnection;
 import org.hibernate.SessionFactory;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class SkillController {
 
     private SkillRepository skillRepository;
     private Connection connection;
-    private ConnectType connectType;
     private SessionFactory sessionFactory;
 
-    public SkillController() throws SQLException {
+    public SkillController()  {
         if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
             this.connection = ConnectorMySQL.getInstance().getConnection();
 
@@ -41,28 +39,28 @@ public class SkillController {
         }
     }
 
-    public void saveSkill(Skill skill) throws SQLException {
+    public void saveSkill(Skill skill) {
         if(skill == null){
             throw new IllegalArgumentException();
         }
         skillRepository.save(skill);
     }
 
-    public Skill getSkillById(Long id) throws SQLException {
+    public Skill getSkillById(Long id)  {
         if(id == 0){
             throw new IllegalArgumentException();
         }
         return skillRepository.getById(id);
     }
 
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(Long id) {
         if(id == 0){
             throw new IllegalArgumentException();
         }
         skillRepository.deleteById(id);
     }
 
-    public void getAll() throws SQLException {
+    public void getAll() {
         skillRepository.getAll();
     }
 

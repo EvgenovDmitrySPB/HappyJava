@@ -1,11 +1,12 @@
 package net.proselyte.crud.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "developers")
-public class Developer {
+public class Developer  implements Serializable {
 
     @Id
     @Column(name = "id",unique = true,nullable = false,length = 5)
@@ -20,7 +21,11 @@ public class Developer {
     @Column(name="specialty", length = 100)
     String specialty;
 
-    @Column(name="account", length = 100)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "accounts",
+            joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
     Account account;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -28,16 +33,11 @@ public class Developer {
             name = "developer_skills",
             joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
+    @Transient
     Set<Skill> skills;
 
     public Developer(){
 
-    }
-
-    public void removeRole(Skill skill){getSkills().remove(skill);}
-    public void addRole(Skill skill){
-        //skill.setSkills(this);
-        getSkills().add(skill);
     }
 
     public Developer(Long id, String firstName, String lastName, String specialty, Account account, Set<Skill> skills){

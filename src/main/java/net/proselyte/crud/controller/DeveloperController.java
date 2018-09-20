@@ -11,14 +11,13 @@ import net.proselyte.crud.util.SelectConnection;
 import org.hibernate.SessionFactory;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class DeveloperController {
     private DeveloperRepository developerRepository;
     private Connection connection;
     private SessionFactory sessionFactory;
 
-    public DeveloperController() throws SQLException {
+    public DeveloperController() {
         if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
             this.connection = ConnectorMySQL.getInstance().getConnection();
 
@@ -39,28 +38,28 @@ public class DeveloperController {
         }
     }
 
-    public void saveDeveloper(Developer developer) throws SQLException {
+    public void saveDeveloper(Developer developer){
         if(developer == null){
             throw new IllegalArgumentException();
         }
         developerRepository.save(developer);
     }
 
-    public Developer getDeveloperById(Long id) throws SQLException {
+    public Developer getDeveloperById(Long id){
         if(id == 0){
             throw new IllegalArgumentException();
         }
         return developerRepository.getById(id);
     }
 
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(Long id){
         if(id == 0){
             throw new IllegalArgumentException();
         }
         developerRepository.deleteById(id);
     }
 
-    public void getAll() throws SQLException {
+    public void getAll() {
 
         developerRepository.getAll();
     }

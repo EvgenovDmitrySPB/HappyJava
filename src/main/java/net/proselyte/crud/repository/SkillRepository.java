@@ -6,17 +6,17 @@ import java.sql.SQLException;
 
 public interface SkillRepository extends GenericRepository<Skill, Long >{
     @Override
-    void save(Skill skill) throws SQLException;
+    void save(Skill skill);
 
     @Override
-    Skill getById(Long aLong) throws SQLException;
+    Skill getById(Long aLong);
 
     @Override
-    void deleteById(Long aLong) throws SQLException;
+    void deleteById(Long aLong);
 
     @Override
-    void getAll() throws SQLException;
+    void getAll();
 
     @Override
-    void update(Long aLong) throws SQLException;
+    void update(Skill skill);
 }

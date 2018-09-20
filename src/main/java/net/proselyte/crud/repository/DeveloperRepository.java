@@ -5,17 +5,17 @@ import java.sql.SQLException;
 
 public interface DeveloperRepository extends GenericRepository<Developer, Long> {
     @Override
-    void save(Developer developer) throws SQLException;
+    void save(Developer developer);
 
     @Override
-    Developer getById(Long aLong) throws SQLException;
+    Developer getById(Long aLong);
 
     @Override
-    void deleteById(Long aLong) throws SQLException;
+    void deleteById(Long aLong);
 
     @Override
-    void getAll() throws SQLException;
+    void getAll();
 
     @Override
-    void update(Long aLong) throws SQLException;
+    void update(Developer developer);
 }

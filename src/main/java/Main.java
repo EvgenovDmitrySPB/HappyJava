@@ -8,14 +8,17 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        Scanner scannerSkill     = new Scanner(System.in);
-        Scanner scannerAccount   = new Scanner(System.in);
-        Scanner scannerDeveloper = new Scanner(System.in);
+        Scanner scannerTypeConnect = new Scanner(System.in);
+        Scanner scannerSkill       = new Scanner(System.in);
+        Scanner scannerAccount     = new Scanner(System.in);
+        Scanner scannerDeveloper   = new Scanner(System.in);
+        Scanner scannerAll         = new Scanner(System.in);
+        Scanner scannerRepeat      = new Scanner(System.in);
 
         //Выбор типа соединения с БД
         boolean repeatTypeConnect = true;
         while (repeatTypeConnect){
-            Scanner scannerTypeConnect= new Scanner(System.in);
+            scannerTypeConnect= new Scanner(System.in);
             System.out.println("Enter system for connecting: 1 - JDBC; 2 - Hibernate ");
             int resultJorH = scannerTypeConnect.nextInt();
 
@@ -30,11 +33,11 @@ public class Main {
             }
         }
 
-        SkillView skillView         = null; //new SkillView();
-        AccountView accountView     = null; //new AccountView();
+        SkillView skillView         = new SkillView();
+        AccountView accountView     = new AccountView();
         DeveloperView developerView = new DeveloperView();
 
-        Scanner scannerAll = new Scanner(System.in);
+        scannerAll = new Scanner(System.in);
 
         boolean repeatAll = true;
         while(repeatAll){
@@ -55,9 +58,8 @@ public class Main {
                     skillView.getAllSkill();
                 }
                 System.out.println("Do you want to repeat ? 1 - yes, 2- no");
-                Scanner scanner3 = new Scanner(System.in);
-                int repeatInt = scanner3.nextInt();
-                if (repeatInt != 1) {
+                scannerRepeat = new Scanner(System.in);
+                if (scannerRepeat.nextInt() != 1) {
                     repeatAll = false;
                 }
             }
@@ -76,9 +78,8 @@ public class Main {
                     accountView.getAllAccount();
                 }
                 System.out.println("Do you want to repeat ? 1 - yes, 2- no");
-                Scanner scanner3 = new Scanner(System.in);
-                int repeatInt = scanner3.nextInt();
-                if (repeatInt != 1) {
+                scannerRepeat = new Scanner(System.in);
+                if (scannerRepeat.nextInt() != 1) {
                     repeatAll = false;
                 }
             }
@@ -97,9 +98,8 @@ public class Main {
                     developerView.getAllDeveloper();
                 }
                 System.out.println("Do you want to repeat ? 1 - yes, 2- no");
-                Scanner scanner3 = new Scanner(System.in);
-                int repeatInt = scanner3.nextInt();
-                if (repeatInt != 1) {
+                scannerRepeat = new Scanner(System.in);
+                if (scannerRepeat.nextInt() != 1) {
                     repeatAll = false;
                 }
             }

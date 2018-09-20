@@ -4,13 +4,13 @@ import java.sql.SQLException;
 
 public interface GenericRepository<T, ID> {
 
-    void save(T t) throws SQLException;
+    void save(T t);
 
-    T getById(ID id) throws SQLException;
+    T getById(ID id);
 
-    void deleteById(ID id) throws SQLException;
+    void deleteById(ID id);
 
-    void getAll() throws SQLException;
+    void getAll();
 
-    void update(ID id) throws SQLException;
+    void update(T t);
 }

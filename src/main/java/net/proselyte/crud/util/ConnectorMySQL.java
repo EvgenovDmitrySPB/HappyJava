@@ -34,15 +34,16 @@ public final class ConnectorMySQL {
     }
 
     private static Connection getMySqlJDBCConnection() {
-        Connection connectMySql = null;
+        Connection connection = null;
         try {
             FileInputStream fis = new FileInputStream(PATH);
             Properties prop = new Properties();
             prop.load(fis);
 
             try {
-                connectMySql = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
+                connection = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
                 System.out.println("Connected to the mySQL on [JDBC] ...");
+                printConnectInfo(connection);
             }catch(SQLException e){
                 System.out.println("SQLException");
             }
@@ -50,16 +51,16 @@ public final class ConnectorMySQL {
         }catch(IOException e){
             System.out.println("IOException");
         }
-        return connectMySql;
+        return connection;
     }
-    private void printConnectInfo() {
-        if (CONNECTION != null){
+    private static void printConnectInfo(Connection connection) {
+        if (connection != null){
             try {
                 System.out.println("*************  Connection has done. Properties *************");
-                System.out.println("DB name: " + CONNECTION.getMetaData().getDatabaseProductName());
-                System.out.println("DB version: " + CONNECTION.getMetaData().getDatabaseProductVersion());
-                System.out.println("Driver: " + CONNECTION.getMetaData().getDriverName());
-                System.out.println("Autocommit: " + CONNECTION.getAutoCommit());
+                System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
+                System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
+                System.out.println("Driver: " + connection.getMetaData().getDriverName());
+                System.out.println("Autocommit: " + connection.getAutoCommit());
                 System.out.println("************************************************************");
             } catch (SQLException e) {
                 System.out.println("SQLException");

@@ -11,14 +11,13 @@ import net.proselyte.crud.util.SelectConnection;
 import org.hibernate.SessionFactory;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class AccountController {
     private AccountRepository accountRepository;
     private Connection connection;
     private SessionFactory sessionFactory;
 
-    public AccountController() throws SQLException {
+    public AccountController(){
         if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
             this.connection = ConnectorMySQL.getInstance().getConnection();
 
@@ -39,21 +38,21 @@ public class AccountController {
         }
     }
 
-    public void saveAccount(Account Account) throws SQLException {
+    public void saveAccount(Account Account){
         if(Account == null){
             throw new IllegalArgumentException();
         }
         accountRepository.save(Account);
     }
 
-    public Account getAccountById(Long id) throws SQLException {
+    public Account getAccountById(Long id){
         if(id == 0){
             throw new IllegalArgumentException();
         }
         return accountRepository.getById(id);
     }
 
-    public void getAll() throws SQLException {
+    public void getAll() {
 
         accountRepository.getAll();
     }

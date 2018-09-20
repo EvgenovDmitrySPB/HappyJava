@@ -22,9 +22,8 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void save(Developer developer) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void save(Developer developer) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "INSERT INTO developers VALUES(" + developer.getId().intValue() + ",'" + developer.getFirstName() +
                     "','" + developer.getLastName() + "','" + developer.getSpecialty() + "','" + developer.getAccount().getId().intValue() + "')";
             statement.executeUpdate(getSql);
@@ -36,21 +35,16 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         }catch (SQLException e){
             System.out.println("Operation save DEVELOPERS. SQLException");
             e.printStackTrace();
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public Developer getById(Long aLong) throws SQLException {
+    public Developer getById(Long aLong) {
         Developer developer = null;
         Account account = null;
         Skill skill = null;
 
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
 
             String getDev = "SELECT\n" +
                     "developers.id,\n" +
@@ -98,18 +92,13 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             }
         } catch (SQLException e) {
             System.out.println("Operation getAll DEVELOPERS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
         }
         return developer;
     }
 
     @Override
-    public void deleteById(Long aLong) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void deleteById(Long aLong) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "DELETE FROM developers WHERE id = " + aLong.intValue();
             statement.executeUpdate(getSql);
             System.out.println("Operation delete DEVELOPERS. Ok");
@@ -118,18 +107,13 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             statement.executeUpdate(getSqlSkill);
         }catch (SQLException e){
             System.out.println("Operation delete DEVELOPERS. SQLException");
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public void getAll() throws SQLException {
+    public void getAll() {
         int temp = 0;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
 
             String getDev = "SELECT\n" +
                     "developers.id,\n" +
@@ -184,15 +168,11 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             }
         } catch (SQLException e) {
             System.out.println("Operation getAll DEVELOPERS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
         }
     }
 
     @Override
-    public void update(Long aLong) throws SQLException {
+    public void update(Developer developer) {
 
     }
 }
