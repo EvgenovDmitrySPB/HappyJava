@@ -1,13 +1,36 @@
 package net.proselyte.crud.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
-public class Developer {
-    Long id;
+@Entity
+@Table(name = "developers")
+public class Developer extends ClassId  {
+
+//    @Id
+//    @Column(name = "id",unique = true,nullable = false,length = 5)
+//    Long id;
+
+    @Column(name="firstName", length = 100)
     String firstName;
+
+    @Column(name="lastName", length = 100)
     String lastName;
+
+    @Column(name="specialty", length = 100)
     String specialty;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account")
     Account account;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "developer_skills",
+            joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
+    //        @Transient
     Set<Skill> skills;
 
     public Developer(){
@@ -15,7 +38,7 @@ public class Developer {
     }
 
     public Developer(Long id, String firstName, String lastName, String specialty, Account account, Set<Skill> skills){
-        this.id = id;
+        super.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.specialty = specialty;
@@ -24,11 +47,11 @@ public class Developer {
     }
 
     public Long getId() {
-        return id;
+        return super.id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        super.id = id;
     }
 
     public String getFirstName() {

@@ -5,11 +5,14 @@ import net.proselyte.crud.controller.AccountController;
 import net.proselyte.crud.controller.DeveloperController;
 import net.proselyte.crud.controller.SkillController;
 import net.proselyte.crud.model.Account;
+import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -17,11 +20,11 @@ import java.util.Set;
 public class DeveloperView {
     private DeveloperController developerController;
 
-    public DeveloperView() throws SQLException {
+    public DeveloperView(){
         developerController = new DeveloperController();
     }
 
-    public void saveDeveloper() throws SQLException {
+    public void saveDeveloper(){
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
@@ -35,7 +38,7 @@ public class DeveloperView {
         String specialty = scanner2.next();
 
         boolean repeatAccount = true;
-        AccountController accountController = new AccountController();
+        AccountController accountController;
         Account account = null;
 
         while (repeatAccount){
@@ -46,10 +49,9 @@ public class DeveloperView {
             if (account.getId() == null){
                 System.out.println("Account with id=" + accountId + " not exist!");
             }
-            System.out.println("Do you want to enter more/other account ? 1 - yes, 2- no");
+            System.out.println("Do you want to enter other account ? 1 - yes, 2- no");
             Scanner scanner3 = new Scanner(System.in);
-            int repeatInt = scanner3.nextInt();
-            if (repeatInt != 1){
+            if (scanner3.nextInt() != 1){
                 repeatAccount = false;
             }
         }
@@ -69,8 +71,7 @@ public class DeveloperView {
             }
             System.out.println("Do you want to enter more/other  skill ? 1 - yes, 2- no");
             Scanner scanner4 = new Scanner(System.in);
-            int repeatInt = scanner4.nextInt();
-            if (repeatInt != 1){
+            if (scanner4.nextInt() != 1){
                 repeatSkill = false;
             }
         }
@@ -80,7 +81,7 @@ public class DeveloperView {
         developerController.saveDeveloper(developerBuilder.toDeveloper());
     }
 
-    public void getDeveloperById() throws SQLException {
+    public void getDeveloperById() {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
@@ -93,7 +94,7 @@ public class DeveloperView {
         }
     }
 
-    public void deleteById() throws SQLException{
+    public void deleteById(){
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id for delete:");
         Long id = scanner2.nextLong();
@@ -101,7 +102,22 @@ public class DeveloperView {
         developerController.deleteById(id);
     }
 
-    public void getAllDeveloper() throws SQLException {
+    public void getAllDeveloper(){
         developerController.getAll();
+    }
+
+    public void updateDeveloper() throws IOException {
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.println("Please enter id for update:");
+        Long id = scanner2.nextLong();
+        System.out.println("Please enter new firstName:");
+        BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+        String firstName = " ";
+        if ((firstName = bufReader.readLine()) != null);
+
+        DeveloperBuilder skillBuilder = new DeveloperBuilder();
+        skillBuilder.withId(id).withFirstName(firstName);
+        developerController.updateDeveloper(skillBuilder.toDeveloper());
+
     }
 }

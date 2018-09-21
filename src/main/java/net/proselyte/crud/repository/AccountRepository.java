@@ -6,14 +6,17 @@ import java.sql.SQLException;
 
 public interface AccountRepository extends GenericRepository<Account, Long>{
     @Override
-    void save(Account account) throws SQLException;
+    void save(Account account);
 
     @Override
-    Account getById(Long aLong) throws SQLException;
+    Account getById(Long aLong);
 
     @Override
-    void deleteById(Long aLong) throws SQLException;
+    void deleteById(Long aLong);
 
     @Override
-    void getAll() throws SQLException;
+    void getAll();
+
+    @Override
+    void update(Account account);
 }

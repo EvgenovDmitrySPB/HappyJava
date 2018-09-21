@@ -13,11 +13,11 @@ import java.util.Scanner;
 public class AccountView {
     private AccountController accountController;
 
-    public AccountView() throws SQLException {
+    public AccountView(){
         accountController = new AccountController();
     }
 
-    public void saveAccount() throws SQLException, IOException {
+    public void saveAccount() throws IOException {
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
@@ -33,7 +33,7 @@ public class AccountView {
         accountController.saveAccount(skillBuilder.toAccount());
     }
 
-    public void getSkillById() throws SQLException {
+    public void getSkillById(){
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
@@ -46,7 +46,7 @@ public class AccountView {
         }
     }
 
-    public void deleteById() throws SQLException{
+    public void deleteById(){
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter id for delete:");
         Long id = scanner2.nextLong();
@@ -54,7 +54,21 @@ public class AccountView {
         accountController.getAccountById(id);
     }
 
-    public void getAllAccount() throws SQLException {
+    public void getAllAccount(){
         accountController.getAll();
+    }
+
+    public void updateAccount() throws IOException{
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.println("Please enter id for update:");
+        Long id = scanner2.nextLong();
+        System.out.println("Please enter new accountData:");
+        BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+        String accountData = " ";
+        if ((accountData = bufReader.readLine()) != null);
+
+        AccountBuilder skillBuilder = new AccountBuilder();
+        skillBuilder.withId(id).withAccount(accountData);
+        accountController.updateAccount(skillBuilder.toAccount());
     }
 }

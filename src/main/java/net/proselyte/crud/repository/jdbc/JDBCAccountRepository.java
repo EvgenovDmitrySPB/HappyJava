@@ -10,32 +10,25 @@ import java.sql.Statement;
 
 public class JDBCAccountRepository implements AccountRepository {
     private Connection connection;
-    private Statement statement;
 
     public JDBCAccountRepository(Connection connection){
         this.connection = connection;
     }
 
     @Override
-    public void save(Account account) throws SQLException {
-            try {
-                statement = connection.createStatement();
+    public void save(Account account) {
+            try (Statement statement = connection.createStatement()){
                 String getSql = "INSERT INTO ACCOUNTS VALUES(" + account.getId().intValue() + ",'" + account.getAccountData() + "')";
                 statement.executeUpdate(getSql);
                 System.out.println("Operation save ACCOUNTS. Ok");
             }catch (SQLException e){
                 System.out.println("Operation save ACCOUNTS. SQLException");
-            }finally{
-                if (statement != null){
-                    statement.close();
-                }
             }
     }
 
     @Override
-    public Account getById(Long aLong) throws SQLException {
-            try {
-            statement = connection.createStatement();
+    public Account getById(Long aLong) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,accountData FROM ACCOUNTS WHERE id=" + aLong.intValue();
             ResultSet result = statement.executeQuery(getSql);
             AccountBuilder accountBuilder = new AccountBuilder();
@@ -48,35 +41,26 @@ public class JDBCAccountRepository implements AccountRepository {
             return account;
         } catch (SQLException e) {
             System.out.println("Operation getById ACCOUNTS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
         }
+
         return null;
     }
 
     @Override
-    public void deleteById(Long aLong) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void deleteById(Long aLong) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "DELETE FROM ACCOUNTS WHERE id = " + aLong.intValue();
             statement.executeUpdate(getSql);
             System.out.println("Operation delete ACCOUNTS. Ok");
         }catch (SQLException e){
             System.out.println("Operation delete ACCOUNTS. SQLException");
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public void getAll() throws SQLException {
+    public void getAll() {
         int temp = 0;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,accountData FROM ACCOUNTS";
             ResultSet result = statement.executeQuery(getSql);
             AccountBuilder accountBuilder = new AccountBuilder();
@@ -93,10 +77,18 @@ public class JDBCAccountRepository implements AccountRepository {
             }
         } catch (SQLException e) {
             System.out.println("Operation getAll ACCOUNTS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+        }
+    }
+
+
+    @Override
+    public void update(Account account) {
+        try (Statement statement = connection.createStatement()){
+            String getSql = "UPDATE accounts set accountData = '" + account.getAccountData() + "' WHERE id=" + account.getId();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation update ACCOUNT.");
+        } catch (SQLException e) {
+            System.out.println("Operation update ACCOUNT. SQLException");
         }
     }
 }

@@ -12,46 +12,35 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
     private Connection connection;
     private Statement statement;
 
-    public JDBCSkillRepositoryImpl(Connection connection) throws SQLException {
+    public JDBCSkillRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public void save(Skill skill) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void save(Skill skill) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "INSERT INTO SKILLS VALUES(" + skill.getId().intValue() + ",'" + skill.getName() + "')";
             statement.executeUpdate(getSql);
             System.out.println("Operation save SKILLS. Ok");
         }catch (SQLException e){
             System.out.println("Operation save SKILLS. SQLException");
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public void deleteById(Long aLong) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void deleteById(Long aLong) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "DELETE FROM skills WHERE id = " + aLong.intValue();
             statement.executeUpdate(getSql);
             System.out.println("Operation delete SKILLS. Ok");
         }catch (SQLException e){
             System.out.println("Operation delete SKILLS. SQLException");
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public Skill getById(Long aLong) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public Skill getById(Long aLong){
+        try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,name FROM SKILLS WHERE id=" + aLong.intValue();
             ResultSet result = statement.executeQuery(getSql);
             SkillBuilder skillBuilder = new SkillBuilder();
@@ -64,19 +53,14 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
             return skill;
         } catch (SQLException e) {
             System.out.println("Operation getById SKILLS. SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
         }
         return null;
     }
 
     @Override
-    public void getAll() throws SQLException {
+    public void getAll(){
         int temp =0;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,name FROM SKILLS";
             ResultSet result = statement.executeQuery(getSql);
             SkillBuilder skillBuilder = new SkillBuilder();
@@ -86,16 +70,24 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
                 skillBuilder.withId(id).withName(name);
                 Skill skill = skillBuilder.toSkill();
                 System.out.println(skill.toString());
+                temp++;
             }
             if (temp ==0){
                 System.out.println("0 element's in SKILLS");
             }
         } catch (SQLException e) {
             System.out.println("Operation getAll ACCOUNTS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+        }
+    }
+
+    @Override
+    public void update(Skill skill) {
+        try (Statement statement = connection.createStatement()){
+            String getSql = "UPDATE skills set name = '" + skill.getName() + "' WHERE id=" + skill.getId();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation update SKILLS.");
+        } catch (SQLException e) {
+            System.out.println("Operation update SKILLS. SQLException");
         }
     }
 }

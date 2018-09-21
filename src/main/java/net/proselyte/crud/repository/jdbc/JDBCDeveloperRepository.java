@@ -8,10 +8,7 @@ import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 import net.proselyte.crud.repository.DeveloperRepository;
 import java.io.ByteArrayInputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,9 +22,8 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void save(Developer developer) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void save(Developer developer) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "INSERT INTO developers VALUES(" + developer.getId().intValue() + ",'" + developer.getFirstName() +
                     "','" + developer.getLastName() + "','" + developer.getSpecialty() + "','" + developer.getAccount().getId().intValue() + "')";
             statement.executeUpdate(getSql);
@@ -39,162 +35,151 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         }catch (SQLException e){
             System.out.println("Operation save DEVELOPERS. SQLException");
             e.printStackTrace();
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public Developer getById(Long aLong) throws SQLException {
-        int temp = 0;
-        try {
-            statement = connection.createStatement();
+    public Developer getById(Long aLong) {
+        Developer developer = null;
+        Account account = null;
+        Skill skill = null;
 
-            String getSql = "SELECT id,firstName,lastName,specialty,account FROM DEVELOPERS WHERE id=" + aLong.intValue();
-            ResultSet result = statement.executeQuery(getSql);
+        try (Statement statement = connection.createStatement()){
+
+            String getDev = "SELECT\n" +
+                    "developers.id,\n" +
+                    "developers.firstName,\n" +
+                    "developers.lastName,\n" +
+                    "developers.specialty,\n" +
+                    "developers.account,\n" +
+                    "developer_skills.idSkill\n" +
+                    "FROM DEVELOPERS\n" +
+                    "LEFT JOIN developer_skills\n" +
+                    "  ON id =developer_skills.idDeveloper\n" +
+                    "WHERE developers.id =" + aLong.intValue() +
+                    " ORDER BY developers.id,developer_skills.idSkill";
+
+            ResultSet resultDev = statement.executeQuery(getDev);
+
             DeveloperBuilder developerBuilder = new DeveloperBuilder();
-            while (result.next()) {
-                Long id = result.getLong(1);
-                String firstName = result.getString(2);
-                String lastName  = result.getString(3);
-                String specialty = result.getString(4);
-                int idAccount   = result.getInt(5);
+            AccountController accountController = new AccountController();
 
-                AccountController accountController = new AccountController();
-                Account account = accountController.getAccountById((long)idAccount);
+            Set<Skill> skills = new HashSet<>();
+            SkillController skillController = new SkillController();
+            long currentIdDev = 0;
 
-                String skillString = result.getString(6);
-                byte[] buffer = skillString.getBytes();
-                ByteArrayInputStream byteArray = new ByteArrayInputStream(buffer);
-                int c;
-                String tempId = "";
-                ArrayList<Integer> list = new ArrayList<>();
-                while((c = byteArray.read()) != -1){
-                    if ((char)c == ' ' ){
-                        list.add(Integer.parseInt(tempId));
-                        tempId = "";
-                    }else {
-                        tempId = tempId + (char)c;
-                    }
-                }
-                if (tempId != ""){
-                    list.add(Integer.parseInt(tempId));
+            while (resultDev.next()) {
+                long idDeveloper = resultDev.getLong(1);
+                String firstName = resultDev.getString(2);
+                String lastName  = resultDev.getString(3);
+                String specialty = resultDev.getString(4);
+                int idAccount    = resultDev.getInt(5);
+                int idSkill = resultDev.getInt(6);
+
+                account = accountController.getAccountById((long)idAccount);
+                skill   = skillController.getSkillById((long) idSkill);
+                if (skill.getId() != null){
+                    skills.add(skill);
                 }
 
-                Set<Skill> skills = new HashSet<>();
-                SkillController skillController = new SkillController();
-                for (int x:list) {
-                    Skill skill = skillController.getSkillById((long) x);
-                    if (skill.getId() != null){
-                        skills.add(skill);
-                    }
+                if (currentIdDev != idDeveloper){
+                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
+                            withAccount(account).withSkill(skills);
+                    developer = developerBuilder.toDeveloper();
+                    skills.clear();
+                    currentIdDev = idDeveloper;
                 }
-
-                developerBuilder.withId(id).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                        withAccount(account).withSkill(skills);
-                Developer developer = developerBuilder.toDeveloper();
-                return developer;
             }
-
-
         } catch (SQLException e) {
-            System.out.println("Operation getAll ACCOUNTS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+            System.out.println("Operation getAll DEVELOPERS . SQLException");
         }
-        return null;
+        return developer;
     }
 
     @Override
-    public void deleteById(Long aLong) throws SQLException {
-        try {
-            statement = connection.createStatement();
+    public void deleteById(Long aLong) {
+        try (Statement statement = connection.createStatement()){
             String getSql = "DELETE FROM developers WHERE id = " + aLong.intValue();
             statement.executeUpdate(getSql);
             System.out.println("Operation delete DEVELOPERS. Ok");
+            String getSqlSkill = "DELETE FROM developer_skills WHERE idDeveloper = " + aLong.intValue();
+            System.out.println("Operation delete developer_skills. Ok");
+            statement.executeUpdate(getSqlSkill);
         }catch (SQLException e){
             System.out.println("Operation delete DEVELOPERS. SQLException");
-        }finally{
-            if (statement != null){
-                statement.close();
-            }
         }
     }
 
     @Override
-    public void getAll() throws SQLException {
+    public void getAll() {
         int temp = 0;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
 
-            String getSql = "SELECT \n" +
-                    "  developers.id,\n" +
-                    "  developers.firstName,\n" +
-                    "  developers.lastName,\n" +
-                    "  developers.specialty,\n" +
-                    "  developers.account,\n" +
-                    "  developer_skills.idDeveloper AS idSkill FROM DEVELOPERS\n" +
-                    "LEFT JOIN \n" +
-                    "  developer_skills ON developers.id = developer_skills.idDeveloper";
-            ResultSet result = statement.executeQuery(getSql);
+            String getDev = "SELECT\n" +
+                    "developers.id,\n" +
+                    "developers.firstName,\n" +
+                    "developers.lastName,\n" +
+                    "developers.specialty,\n" +
+                    "developers.account,\n" +
+                    "developer_skills.idSkill\n" +
+                    "FROM DEVELOPERS\n" +
+                    "LEFT JOIN developer_skills\n" +
+                    "  ON id =developer_skills.idDeveloper\n" +
+                    "ORDER BY developers.id,developer_skills.idSkill";
+
+            ResultSet resultDev = statement.executeQuery(getDev);
+
             DeveloperBuilder developerBuilder = new DeveloperBuilder();
-            while (result.next()) {
-                Long id = result.getLong(1);
-                String firstName = result.getString(2);
-                String lastName  = result.getString(3);
-                String specialty = result.getString(4);
-                int idAccount   = result.getInt(5);
+            Developer developer = null;
+            AccountController accountController = new AccountController();
+            Account account = null;
 
-                AccountController accountController = new AccountController();
-                Account account = accountController.getAccountById((long)idAccount);
+            Set<Skill> skills = new HashSet<>();
+            SkillController skillController = new SkillController();
+            Skill skill = null;
+            long currentIdDev = 0;
 
-//                String skillString = result.getString(6);
-//                byte[] buffer = skillString.getBytes();
-//                ByteArrayInputStream byteArray = new ByteArrayInputStream(buffer);
-//                int c;
-//                String tempId = "";
-//                ArrayList<Integer> list = new ArrayList<>();
-//                while((c = byteArray.read()) != -1){
-//                    if ((char)c == ' ' ){
-//                        list.add(Integer.parseInt(tempId));
-//                        tempId = "";
-//                    }else {
-//                        tempId = tempId + (char)c;
-//                    }
-//                }
-//                if (tempId != ""){
-//                    list.add(Integer.parseInt(tempId));
-//                }
+            while (resultDev.next()) {
+                long idDeveloper = resultDev.getLong(1);
+                String firstName = resultDev.getString(2);
+                String lastName  = resultDev.getString(3);
+                String specialty = resultDev.getString(4);
+                int idAccount    = resultDev.getInt(5);
+                int idSkill = resultDev.getInt(6);
 
-//                Set<Skill> skills = new HashSet<>();
-//                SkillController skillController = new SkillController();
-//                for (int x:list) {
-//                    Skill skill = skillController.getSkillById((long) x);
-//                    if (skill.getId() != null){
-//                        skills.add(skill);
-//                    }
-//                }
+                account = accountController.getAccountById((long)idAccount);
+                skill   = skillController.getSkillById((long) idSkill);
+                if (skill.getId() != null){
+                    skills.add(skill);
+                }
 
-                developerBuilder.withId(id).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                        withAccount(account);//-*-----
-                Developer developer = developerBuilder.toDeveloper();
-                System.out.println(developer.toString());
-                temp++;
+                if (currentIdDev != idDeveloper){
+                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
+                            withAccount(account).withSkill(skills);
+                    developer = developerBuilder.toDeveloper();
+                    System.out.println(developer.toString());
+                    skills.clear();
+                    temp++;
+                    currentIdDev = idDeveloper;
+                }
             }
             if (temp ==0){
                 System.out.println("0 element's in DEVELOPERS ");
             }
-
         } catch (SQLException e) {
-            System.out.println("Operation getAll ACCOUNTS . SQLException");
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+            System.out.println("Operation getAll DEVELOPERS . SQLException");
         }
+    }
+
+    @Override
+    public void update(Developer developer) {
+        try (Statement statement = connection.createStatement()){
+            String getSql = "UPDATE developers set firstName = '" + developer.getFirstName() + "' WHERE id=" + developer.getId();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation update DEVELOPER.");
+        } catch (SQLException e) {
+            System.out.println("Operation update DEVELOPER. SQLException");
+        }
+
     }
 }
