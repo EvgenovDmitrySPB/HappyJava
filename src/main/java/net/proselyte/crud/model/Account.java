@@ -13,6 +13,7 @@ public class Account  implements Serializable {
     @Column(name="accountData")
     private String accountData;
 
+    //comment
     public Account(){
 
     }
