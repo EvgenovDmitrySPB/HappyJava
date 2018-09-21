@@ -21,18 +21,16 @@ public class Developer extends ClassId  {
     @Column(name="specialty", length = 100)
     String specialty;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "accounts",
-            joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account")
     Account account;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "developer_skills",
             joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
+    //        @Transient
     Set<Skill> skills;
 
     public Developer(){
@@ -40,7 +38,7 @@ public class Developer extends ClassId  {
     }
 
     public Developer(Long id, String firstName, String lastName, String specialty, Account account, Set<Skill> skills){
-        this.id = id;
+        super.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.specialty = specialty;

@@ -1,10 +1,9 @@
 package net.proselyte.crud.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "skills")
@@ -16,6 +15,17 @@ public class Skill extends ClassId {
 
     @Column(name="name")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    Set<Developer> developers = new HashSet<>();
+
+    public Set<Developer> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Set<Developer> developers) {
+        this.developers = developers;
+    }
 
     public Skill() {
     }
@@ -30,7 +40,7 @@ public class Skill extends ClassId {
     }
 
     public void setId(Long id) {
-        this.id = id;
+        super.id = id;
     }
 
     public String getName() {

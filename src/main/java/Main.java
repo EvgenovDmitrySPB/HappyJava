@@ -89,7 +89,7 @@ public class Main {
             }
             if (resultAll == 3) {
                 //Developers
-                System.out.println("Enter number operation. 1 - save Developer; 2 - get Developer by id; 3 - delete Developer by id; 4 - GET all Developer; 5 - Update Account ");
+                System.out.println("Enter number operation. 1 - save Developer; 2 - get Developer by id; 3 - delete Developer by id; 4 - GET all Developer; 5 - Update Developer ");
                 int resultDeveloper = scannerDeveloper.nextInt();
 
                 if (resultDeveloper == 1) {

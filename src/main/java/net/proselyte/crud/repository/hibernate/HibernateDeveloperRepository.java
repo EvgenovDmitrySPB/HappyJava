@@ -66,6 +66,8 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
+        //    List<Developer> developers  = session.createQuery("from Developer u").list();
+
             Criteria criteria = session.createCriteria(Developer.class);
             List<Developer> developers = criteria.list();
             int count = 0;
