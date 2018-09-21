@@ -1,25 +1,23 @@
 package net.proselyte.crud.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "accounts")
-public class Account  implements Serializable {
-    @Id
-    @Column(name = "id",unique = true,nullable = false,length = 5)
-    private Long id;
+public class Account extends ClassId {
+//    @Id
+//    @Column(name = "id",unique = true,nullable = false,length = 5)
+//    private Long id;
 
     @Column(name="accountData")
     private String accountData;
 
-    //comment
     public Account(){
 
     }
 
     public Account(Long id, String accountData){
-        this.id = id;
+        super.id = id;
         this.accountData = accountData;
     }
 
@@ -32,11 +30,11 @@ public class Account  implements Serializable {
     }
 
     public Long getId() {
-        return id;
+        return super.id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        super.id = id;
     }
 
     @Override
@@ -46,4 +44,6 @@ public class Account  implements Serializable {
                 ", accountData='" + accountData + '\'' +
                 '}';
     }
+
+
 }

@@ -6,11 +6,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "developers")
-public class Developer  implements Serializable {
+public class Developer extends ClassId  {
 
-    @Id
-    @Column(name = "id",unique = true,nullable = false,length = 5)
-    Long id;
+//    @Id
+//    @Column(name = "id",unique = true,nullable = false,length = 5)
+//    Long id;
 
     @Column(name="firstName", length = 100)
     String firstName;
@@ -33,7 +33,6 @@ public class Developer  implements Serializable {
             name = "developer_skills",
             joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
-    @Transient
     Set<Skill> skills;
 
     public Developer(){
@@ -50,11 +49,11 @@ public class Developer  implements Serializable {
     }
 
     public Long getId() {
-        return id;
+        return super.id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        super.id = id;
     }
 
     public String getFirstName() {

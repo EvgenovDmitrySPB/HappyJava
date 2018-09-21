@@ -8,11 +8,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "skills")
-public class Skill implements Serializable {
+public class Skill extends ClassId {
 
-    @Id
-    @Column(name = "id",unique = true,nullable = false,length = 5)
-    private Long id;
+//    @Id
+//    @Column(name = "id",unique = true,nullable = false,length = 5)
+//    private Long id;
 
     @Column(name="name")
     private String name;
@@ -21,12 +21,12 @@ public class Skill implements Serializable {
     }
 
     public Skill(Long id, String name) {
-        this.id = id;
+        super.id = id;
         this.name = name;
     }
 
     public Long getId() {
-        return id;
+        return super.id;
     }
 
     public void setId(Long id) {
