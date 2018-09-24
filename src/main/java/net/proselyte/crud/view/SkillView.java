@@ -24,8 +24,8 @@ public class SkillView {
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
-        System.out.println("Please enter id");
-        Long id = scanner2.nextLong();
+//        System.out.println("Please enter id");
+//        Long id = scanner2.nextLong();
         System.out.println("Please enter name");
 
         BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
@@ -33,7 +33,7 @@ public class SkillView {
         if ((name = bufReader.readLine()) != null);
 
         SkillBuilder skillBuilder = new SkillBuilder();
-        skillBuilder.withId(id).withName(name);
+        skillBuilder.withName(name);
         skillController.saveSkill(skillBuilder.toSkill());
     }
 

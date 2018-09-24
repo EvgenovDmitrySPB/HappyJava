@@ -35,9 +35,10 @@ public class HibernateSkillRepository implements SkillRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
+            skill = (Skill) session.get(Skill.class, aLong);
 
-            List<Skill> list = session.createCriteria(Skill.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            skill = list.get(0);
+//            List<Skill> list = session.createCriteria(Skill.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
+//            skill = list.get(0);
             session.getTransaction().commit();
 
         }catch (HibernateException e){
@@ -51,8 +52,13 @@ public class HibernateSkillRepository implements SkillRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            List<Skill> list = session.createCriteria(Skill.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            session.delete(list.get(0));
+            Skill skill = (Skill) session.get(Skill.class, aLong);
+            session.delete(skill);
+//            Object obj = session.load(Skill.class, aLong.intValue());
+//            if (obj != null){
+//                session.delete(obj);
+//            }
+
             session.getTransaction().commit();
             System.out.println("Operation delete SKILL. Ok");
         }catch (HibernateException e){

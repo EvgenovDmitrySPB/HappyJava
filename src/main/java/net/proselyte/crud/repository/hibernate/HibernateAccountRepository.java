@@ -6,9 +6,6 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public class HibernateAccountRepository implements AccountRepository {
@@ -36,9 +33,7 @@ public class HibernateAccountRepository implements AccountRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-
-            List<Account> list = session.createCriteria(Account.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            account = list.get(0);
+            account =  (Account) session.get(Account.class, aLong);
             session.getTransaction().commit();
 
         }catch (HibernateException e){
@@ -52,8 +47,11 @@ public class HibernateAccountRepository implements AccountRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            List<Account> list = session.createCriteria(Account.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            session.delete(list.get(0));
+            Account account =  (Account) session.get(Account.class, aLong);
+            session.delete(account);
+
+//            List<Account> list = session.createCriteria(Account.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
+//            session.delete(list.get(0));
             session.getTransaction().commit();
             System.out.println("Operation delete ACCOUNT. Ok");
         }catch (HibernateException e){

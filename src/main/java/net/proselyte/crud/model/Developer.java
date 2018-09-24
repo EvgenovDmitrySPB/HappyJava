@@ -1,7 +1,7 @@
 package net.proselyte.crud.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,7 +31,7 @@ public class Developer extends ClassId  {
             joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
     //        @Transient
-    Set<Skill> skills;
+    Set<Skill> skills = new HashSet<>();
 
     public Developer(){
 

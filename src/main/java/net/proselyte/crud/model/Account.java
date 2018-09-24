@@ -1,7 +1,6 @@
 package net.proselyte.crud.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
@@ -14,8 +13,8 @@ public class Account extends ClassId {
     private String accountData;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Developer developer;
+    @JoinColumn(name = "id", referencedColumnName = "account")
+    private Developer developer = null;
 
     public Developer getDeveloper() {
         return developer;

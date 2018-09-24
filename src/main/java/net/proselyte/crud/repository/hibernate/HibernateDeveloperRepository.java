@@ -35,9 +35,10 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
+            developer =  (Developer) session.get(Developer.class, aLong);
 
-            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            developer = list.get(0);
+//            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
+//            developer = list.get(0);
             session.getTransaction().commit();
 
         }catch (HibernateException e){
@@ -51,8 +52,14 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            session.delete(list.get(0));
+
+            Object obj = session.load(Developer.class, aLong.intValue());
+            if (obj != null){
+                session.delete(obj);
+            }
+
+//            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
+//            session.delete(list.get(0));
             session.getTransaction().commit();
             System.out.println("Operation delete DEVELOPER. Ok");
         }catch (HibernateException e){

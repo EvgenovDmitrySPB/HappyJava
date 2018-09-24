@@ -18,7 +18,7 @@ public class JDBCAccountRepository implements AccountRepository {
     @Override
     public void save(Account account) {
             try (Statement statement = connection.createStatement()){
-                String getSql = "INSERT INTO ACCOUNTS VALUES(" + account.getId().intValue() + ",'" + account.getAccountData() + "')";
+                String getSql = "INSERT INTO ACCOUNTS(accountData) VALUES('" + account.getAccountData() + "')";
                 statement.executeUpdate(getSql);
                 System.out.println("Operation save ACCOUNTS. Ok");
             }catch (SQLException e){
