@@ -14,7 +14,8 @@ public class Account extends ClassId {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", referencedColumnName = "account")
-    private Developer developer = null;
+    @Transient
+    private Developer developer;
 
     public Developer getDeveloper() {
         return developer;

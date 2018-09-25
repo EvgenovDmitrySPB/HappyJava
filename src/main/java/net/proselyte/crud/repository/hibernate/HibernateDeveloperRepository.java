@@ -53,13 +53,9 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-            Object obj = session.load(Developer.class, aLong.intValue());
-            if (obj != null){
-                session.delete(obj);
-            }
+            Developer developer = (Developer) session.get(Developer.class, aLong);
+            session.delete(developer);
 
-//            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-//            session.delete(list.get(0));
             session.getTransaction().commit();
             System.out.println("Operation delete DEVELOPER. Ok");
         }catch (HibernateException e){
