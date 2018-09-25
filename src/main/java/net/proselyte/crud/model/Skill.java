@@ -15,8 +15,8 @@ public class Skill extends ClassId {
     @Column(name="name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
-    @Transient
+ //   @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "skills")
     Set<Developer> developers = new HashSet<>();
 
 
