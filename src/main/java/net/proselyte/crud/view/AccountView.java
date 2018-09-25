@@ -21,15 +21,13 @@ public class AccountView {
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
-        System.out.println("Please enter id");
-        Long id = scanner2.nextLong();
         System.out.println("Please enter name");
         BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
         String name = " ";
         if ((name = bufReader.readLine()) != null);
 
         AccountBuilder skillBuilder = new AccountBuilder();
-        skillBuilder.withId(id).withAccount(name);
+        skillBuilder.withAccount(name);
         accountController.saveAccount(skillBuilder.toAccount());
     }
 
@@ -51,7 +49,7 @@ public class AccountView {
         System.out.println("Please enter id for delete:");
         Long id = scanner2.nextLong();
 
-        accountController.getAccountById(id);
+        accountController.deleteById(id);
     }
 
     public void getAllAccount(){

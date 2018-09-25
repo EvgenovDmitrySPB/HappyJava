@@ -1,7 +1,6 @@
 package net.proselyte.crud.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,9 @@ public class Skill extends ClassId {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @Transient
     Set<Developer> developers = new HashSet<>();
+
 
     public Set<Developer> getDevelopers() {
         return developers;
@@ -58,4 +59,6 @@ public class Skill extends ClassId {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+
 }

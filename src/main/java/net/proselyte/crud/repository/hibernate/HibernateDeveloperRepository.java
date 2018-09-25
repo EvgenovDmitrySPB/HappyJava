@@ -35,9 +35,10 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
+            developer =  (Developer) session.get(Developer.class, aLong);
 
-            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            developer = list.get(0);
+//            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
+//            developer = list.get(0);
             session.getTransaction().commit();
 
         }catch (HibernateException e){
@@ -51,8 +52,10 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            List<Developer> list = session.createCriteria(Developer.class).add(Restrictions.eq("id", aLong)).setMaxResults(1).list();
-            session.delete(list.get(0));
+
+            Developer developer = (Developer) session.get(Developer.class, aLong);
+            session.delete(developer);
+
             session.getTransaction().commit();
             System.out.println("Operation delete DEVELOPER. Ok");
         }catch (HibernateException e){
@@ -89,6 +92,10 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
+            //сохраняем в переменную новое имя и устанавливаем его в полученный объект из БД
+            String newName = developer.getFirstName();
+            developer =  (Developer) session.get(Developer.class, developer.getId());
+            developer.setFirstName(newName);
             session.update(developer);
             session.getTransaction().commit();
             System.out.println("Operation update DEVELOPER. Ok");

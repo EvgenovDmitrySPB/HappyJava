@@ -52,6 +52,13 @@ public class AccountController {
         return accountRepository.getById(id);
     }
 
+    public void deleteById(Long id) {
+        if(id == 0){
+            throw new IllegalArgumentException();
+        }
+        accountRepository.deleteById(id);
+    }
+
     public void getAll() {
 
         accountRepository.getAll();

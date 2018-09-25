@@ -19,7 +19,7 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
     @Override
     public void save(Skill skill) {
         try (Statement statement = connection.createStatement()){
-            String getSql = "INSERT INTO SKILLS VALUES(" + skill.getId().intValue() + ",'" + skill.getName() + "')";
+            String getSql = "INSERT INTO SKILLS(name) VALUES('" +  skill.getName() + "')";
             statement.executeUpdate(getSql);
             System.out.println("Operation save SKILLS. Ok");
         }catch (SQLException e){

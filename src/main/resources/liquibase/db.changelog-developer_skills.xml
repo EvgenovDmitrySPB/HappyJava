@@ -12,7 +12,9 @@
         <sql>
             CREATE TABLE DEVELOPER_SKILLS(
 			idDeveloper int(5),
-			idSkill int(5))
+			idSkill int(5),
+            FOREIGN KEY (idDeveloper) REFERENCES developers (id),
+            FOREIGN KEY (idSkill) REFERENCES skills (id);)
         </sql>
     </changeSet>
 

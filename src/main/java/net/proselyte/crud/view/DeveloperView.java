@@ -28,8 +28,6 @@ public class DeveloperView {
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
-        System.out.println("Please enter id");
-        Long id = scanner2.nextLong();
         System.out.println("Please enter first name");
         String firstName = scanner2.next();
         System.out.println("Please enter last name");
@@ -77,7 +75,7 @@ public class DeveloperView {
         }
 
         DeveloperBuilder developerBuilder = new DeveloperBuilder();
-        developerBuilder.withId(id).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).withAccount(account).withSkill(skills);
+        developerBuilder.withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).withAccount(account).withSkill(skills);
         developerController.saveDeveloper(developerBuilder.toDeveloper());
     }
 
