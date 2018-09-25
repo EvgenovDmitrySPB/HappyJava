@@ -26,11 +26,11 @@ public class Developer extends ClassId  {
     Account account;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @OrderBy(value = "id")
     @JoinTable(
             name = "developer_skills",
             joinColumns = {@JoinColumn(name = "idDeveloper", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
-    @Transient
     Set<Skill> skills = new HashSet<>();
 
     public Developer(){
