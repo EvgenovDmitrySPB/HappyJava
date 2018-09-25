@@ -92,6 +92,10 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
+            //сохраняем в переменную новое имя и устанавливаем его в полученный объект из БД
+            String newName = developer.getFirstName();
+            developer =  (Developer) session.get(Developer.class, developer.getId());
+            developer.setFirstName(newName);
             session.update(developer);
             session.getTransaction().commit();
             System.out.println("Operation update DEVELOPER. Ok");
