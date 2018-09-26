@@ -2,6 +2,7 @@ package net.proselyte.crud.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,6 +34,9 @@ public class Developer extends ClassId  {
             inverseJoinColumns = {@JoinColumn(name = "idSkill", referencedColumnName = "id")})
     Set<Skill> skills = new HashSet<>();
 
+    @OneToMany(mappedBy = "iDeveloper", fetch = FetchType.LAZY)
+    List<Phones> phones;
+
     public Developer(){
 
     }
@@ -44,6 +48,14 @@ public class Developer extends ClassId  {
         this.specialty = specialty;
         this.account = account;
         this.skills = skills;
+    }
+
+    public List<Phones> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phones> phones) {
+        this.phones = phones;
     }
 
     public Long getId() {
@@ -103,6 +115,7 @@ public class Developer extends ClassId  {
                 ", specialty='" + specialty + '\'' +
                 ", account=" + account +
                 ", skills=" + skills +
+                ", phones=" + phones +
                 '}';
     }
 }

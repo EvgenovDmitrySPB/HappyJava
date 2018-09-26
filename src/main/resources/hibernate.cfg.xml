@@ -15,7 +15,7 @@
         <mapping class="net.proselyte.crud.model.Account"/>
         <mapping class="net.proselyte.crud.model.Skill"/>
         <mapping class="net.proselyte.crud.model.Developer"/>
-
+        <mapping class="net.proselyte.crud.model.Phones"/>
         <!--<mapping class="net.proselyte.crud.model.ClassId"/>-->
         <!-- DB schema will be updated if needed -->
     </session-factory>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="create_phones" author="EvgenovDmitry">
+        <comment>
+            CREATE phones
+        </comment>
+        <sql>
+            CREATE TABLE phones(
+			id int(5) PRIMARY KEY UNIQUE AUTO_INCREMENT,
+			name VARCHAR(100),
+			idDeveloper int(5))
+        </sql>
+    </changeSet>
+</databaseChangeLog>
