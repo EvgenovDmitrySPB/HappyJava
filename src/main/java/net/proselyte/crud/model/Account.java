@@ -13,8 +13,8 @@ public class Account extends ClassId {
     private String accountData;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "account")
-    @Transient
+    @JoinColumn(name = "id") //, referencedColumnName = "account")
+    //@Transient
     private Developer developer;
 
     public Developer getDeveloper() {
