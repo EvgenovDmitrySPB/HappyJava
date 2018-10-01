@@ -4,14 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-    <servlet-name>AccountServlet</servlet-name>
-    <servlet-class>net.proselyte.crud.controller.servlets.AccountServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>AccountServlet</servlet-name>
-    <url-pattern>/account</url-pattern>
-  </servlet-mapping>
-
 </web-app>

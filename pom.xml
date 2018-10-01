@@ -8,6 +8,8 @@
     <artifactId>ProgramJDBC</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
+    <name>Happy Java Application</name>
+    <url>http://www.example.com</url>
 
     <properties>
         <maven.compiler.source>1.9</maven.compiler.source>
@@ -15,7 +17,7 @@
         <mysqlConnectorVersion>5.1.35</mysqlConnectorVersion>
         <lombokVersion>1.16.18</lombokVersion>
         <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
-        <servletVersion>3.1.0</servletVersion>
+        <servletVersion>2.5</servletVersion>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <liquiBaseVersion>3.4.2</liquiBaseVersion>
     </properties>
@@ -39,6 +41,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
             <!--
             <plugin>
@@ -70,10 +76,18 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat.plugin.version}</version>
+                <version>2.2</version>
                 <configuration>
-                    <path>/</path>
                     <port>8080</port>
+                    <path>/</path>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.9</source>
+                    <target>1.9</target>
                 </configuration>
             </plugin>
             <!--
@@ -117,9 +131,10 @@
             <version>${org.hibernate.hibernate-core.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servletVersion}</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
