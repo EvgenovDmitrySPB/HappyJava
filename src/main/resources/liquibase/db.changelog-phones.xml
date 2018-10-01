@@ -5,15 +5,16 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="create_phones" author="EvgenovDmitry">
+    <changeSet id="create_phones" author="EvgenovDmitry ">
         <comment>
-            CREATE phones
+            CREATE PHONES
         </comment>
         <sql>
-            CREATE TABLE phones(
-			id int(5) PRIMARY KEY UNIQUE AUTO_INCREMENT,
-			name VARCHAR(100),
-			idDeveloper int(5))
+            CREATE TABLE PHONES(
+            id int(5) UNIQUE AUTO_INCREMENT,
+            name VARCHAR(100) null,
+            idDeveloper int(5) null,
+            FOREIGN KEY (idDeveloper) REFERENCES developers (id))
         </sql>
     </changeSet>
 </databaseChangeLog>
