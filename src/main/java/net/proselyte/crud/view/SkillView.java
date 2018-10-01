@@ -2,14 +2,10 @@ package net.proselyte.crud.view;
 
 import net.proselyte.crud.builders.SkillBuilder;
 import net.proselyte.crud.controller.SkillController;
-import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Skill;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class SkillView {

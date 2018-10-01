@@ -5,14 +5,12 @@ import net.proselyte.crud.controller.AccountController;
 import net.proselyte.crud.controller.DeveloperController;
 import net.proselyte.crud.controller.SkillController;
 import net.proselyte.crud.model.Account;
-import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.model.Developer;
 import net.proselyte.crud.model.Skill;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;

@@ -7,7 +7,6 @@ import net.proselyte.crud.model.Account;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AccountView {
