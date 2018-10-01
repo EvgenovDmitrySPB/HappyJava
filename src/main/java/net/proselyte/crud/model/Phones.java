@@ -4,10 +4,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "phones")
-public class Phones {
-    @Id
-    long id;
+public class Phones extends ClassId{
 
+    @Column(name="name", length = 100)
     String name;
 
     @ManyToOne(fetch=FetchType.LAZY)
@@ -24,11 +23,11 @@ public class Phones {
     }
 
     public long getId() {
-        return id;
+        return super.id;
     }
 
     public void setId(long id) {
-        this.id = id;
+        super.id = id;
     }
 
     public Developer getDeveloper() {
