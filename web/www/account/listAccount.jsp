@@ -22,7 +22,7 @@
     <p>Account list</p>
     <table border="1">
         <tr>
-            <td>Столбец 1</td>
+            <td>Настя пришщла</td>
             <td>Столбец 2</td>
             <td>Столбец 3</td>
         </tr>

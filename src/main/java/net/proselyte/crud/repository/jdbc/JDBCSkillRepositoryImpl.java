@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCSkillRepositoryImpl implements SkillRepository {
     private Connection connection;
@@ -58,7 +60,8 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
     }
 
     @Override
-    public void getAll(){
+    public List<Skill> getAll(){
+        List<Skill> list = new ArrayList<>();
         int temp =0;
         try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,name FROM SKILLS";
@@ -78,6 +81,7 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
         } catch (SQLException e) {
             System.out.println("Operation getAll ACCOUNTS . SQLException");
         }
+        return list;
     }
 
     @Override

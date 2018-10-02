@@ -11,6 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class JDBCDeveloperRepository implements DeveloperRepository {
@@ -141,7 +142,8 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void getAll() {
+    public List<Developer> getAll() {
+        List<Developer> list = new ArrayList<>();
         int temp = 0;
         try (Statement statement = connection.createStatement()){
 
@@ -212,6 +214,7 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
         } catch (SQLException e) {
             System.out.println("Operation getAll DEVELOPERS . SQLException");
         }
+        return list;
     }
 
     @Override

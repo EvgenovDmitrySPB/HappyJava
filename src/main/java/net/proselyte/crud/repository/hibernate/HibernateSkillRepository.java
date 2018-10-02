@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateSkillRepository implements SkillRepository {
@@ -67,7 +68,8 @@ public class HibernateSkillRepository implements SkillRepository {
     }
 
     @Override
-    public void getAll() {
+    public List<Skill> getAll() {
+        List<Skill> list = new ArrayList<>();
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -87,6 +89,7 @@ public class HibernateSkillRepository implements SkillRepository {
         }catch (HibernateException e){
             System.out.println("Operation getAll SKILL . HibernateException");
         }
+        return list;
     }
 
     @Override

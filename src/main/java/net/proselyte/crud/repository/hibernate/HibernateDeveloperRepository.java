@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateDeveloperRepository implements DeveloperRepository {
@@ -64,7 +65,8 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void getAll() {
+    public List<Developer> getAll() {
+        List<Developer> list = new ArrayList<>();
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -85,6 +87,7 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
         }catch (HibernateException e){
             System.out.println("Operation getAll DEVELOPER . HibernateException");
         }
+        return list;
     }
 
     @Override
