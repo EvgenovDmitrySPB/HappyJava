@@ -1,7 +1,8 @@
 package net.proselyte.crud.repository;
 
 import net.proselyte.crud.model.Developer;
-import java.sql.SQLException;
+
+import java.util.List;
 
 public interface DeveloperRepository extends GenericRepository<Developer, Long> {
     @Override
@@ -14,7 +15,7 @@ public interface DeveloperRepository extends GenericRepository<Developer, Long> 
     void deleteById(Long aLong);
 
     @Override
-    void getAll();
+    List<Developer> getAll();
 
     @Override
     void update(Developer developer);

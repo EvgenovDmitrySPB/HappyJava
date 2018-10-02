@@ -2,7 +2,7 @@ package net.proselyte.crud.repository;
 
 import net.proselyte.crud.model.Account;
 
-import java.sql.SQLException;
+import java.util.List;
 
 public interface AccountRepository extends GenericRepository<Account, Long>{
     @Override
@@ -15,7 +15,7 @@ public interface AccountRepository extends GenericRepository<Account, Long>{
     void deleteById(Long aLong);
 
     @Override
-    void getAll();
+    List<Account> getAll();
 
     @Override
     void update(Account account);

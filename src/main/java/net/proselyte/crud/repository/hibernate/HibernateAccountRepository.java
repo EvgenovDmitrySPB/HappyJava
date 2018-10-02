@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateAccountRepository implements AccountRepository {
@@ -60,25 +62,23 @@ public class HibernateAccountRepository implements AccountRepository {
     }
 
     @Override
-    public void getAll()  {
+    public List<Account> getAll()  {
+        List<Account> list = new ArrayList<>();
         try{
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
             Criteria criteria = session.createCriteria(Account.class);
-            List<Account> skills = criteria.list();
-            int count = 0;
-            for (Account skill:skills) {
-                System.out.println(skill.toString());
-                count++;
-            }
-            if (count == 0){
+            list = criteria.list();
+
+            if (list.size() == 0){
                 System.out.println("0 element's in ACCOUNT ");
             }
 
         }catch (HibernateException e){
             System.out.println("Operation getAll ACCOUNT . HibernateException");
         }
+        return list;
     }
 
     @Override

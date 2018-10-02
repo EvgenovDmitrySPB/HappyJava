@@ -2,7 +2,8 @@ package net.proselyte.crud.repository;
 
 import net.proselyte.crud.model.Skill;
 
-import java.sql.SQLException;
+import java.util.List;
+
 
 public interface SkillRepository extends GenericRepository<Skill, Long >{
     @Override
@@ -15,7 +16,7 @@ public interface SkillRepository extends GenericRepository<Skill, Long >{
     void deleteById(Long aLong);
 
     @Override
-    void getAll();
+    List<Skill> getAll();
 
     @Override
     void update(Skill skill);

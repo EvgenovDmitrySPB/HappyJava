@@ -11,7 +11,6 @@
     <title>Happy Java Application</title>
   </head>
   <body>
-  <p>Happy Java Application</p>
   <div>
     <div>
       <button onclick="location.href='index.jsp'">Main</button>
@@ -20,7 +19,7 @@
       <button onclick="location.href='/account'">Account</button>
       <button onclick="location.href='/phone'">Phone</button>
     </div>
-    <p>Здравствуйте. </p>
+    <p>Hello. Welcome to the starting page application.</p>
   </div>
   </body>
 </html>

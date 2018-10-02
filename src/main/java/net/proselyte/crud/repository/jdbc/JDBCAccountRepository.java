@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCAccountRepository implements AccountRepository {
     private Connection connection;
@@ -58,7 +60,8 @@ public class JDBCAccountRepository implements AccountRepository {
     }
 
     @Override
-    public void getAll() {
+    public List<Account> getAll() {
+        List<Account> list = new ArrayList<>();
         int temp = 0;
         try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,accountData FROM ACCOUNTS";
@@ -78,6 +81,7 @@ public class JDBCAccountRepository implements AccountRepository {
         } catch (SQLException e) {
             System.out.println("Operation getAll ACCOUNTS . SQLException");
         }
+        return list;
     }
 
 
