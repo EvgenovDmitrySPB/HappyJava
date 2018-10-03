@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public final class ConnectorMySQL {
-    private static final String PATH = "src\\main\\resources\\liquibase\\liquibase.properties";
+   //private static final String PATH = "src\\main\\resources\\liquibase\\liquibase.properties";
+   private static final String PATH = "C:\\Users\\d.evgenov\\IdeaProjects\\ProgramJDBC_MVC1\\src\\main\\resources\\liquibase\\liquibase.properties";
     private static ConnectorMySQL INSTANCE = null;
     private static Connection CONNECTION = getMySqlJDBCConnection();
 
@@ -41,11 +42,14 @@ public final class ConnectorMySQL {
             prop.load(fis);
 
             try {
+                Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
                 System.out.println("Connected to the mySQL on [JDBC] ...");
                 printConnectInfo(connection);
             }catch(SQLException e){
                 System.out.println("SQLException");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
 
         }catch(IOException e){

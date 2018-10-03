@@ -1,12 +1,12 @@
 package net.proselyte.crud.view;
 
-import net.proselyte.crud.builders.AccountBuilder;
 import net.proselyte.crud.controller.AccountController;
-import net.proselyte.crud.model.Account;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AccountView {
@@ -22,12 +22,12 @@ public class AccountView {
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter name");
         BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
-        String name = " ";
+        String name = "";
         if ((name = bufReader.readLine()) != null);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
 
-        AccountBuilder skillBuilder = new AccountBuilder();
-        skillBuilder.withAccount(name);
-        accountController.saveAccount(skillBuilder.toAccount());
+        accountController.saveAccount(map);
     }
 
     public void getSkillById(){
@@ -35,12 +35,7 @@ public class AccountView {
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
 
-        Account skill = accountController.getAccountById(id);
-        if (skill.getId() != null){
-            System.out.println(skill.toString());
-        }else {
-            System.out.println("Account not found by id = " + id);
-        }
+        accountController.getAccountById(id);
     }
 
     public void deleteById(){
@@ -64,8 +59,10 @@ public class AccountView {
         String accountData = " ";
         if ((accountData = bufReader.readLine()) != null);
 
-        AccountBuilder skillBuilder = new AccountBuilder();
-        skillBuilder.withId(id).withAccount(accountData);
-        accountController.updateAccount(skillBuilder.toAccount());
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("accountData", accountData);
+
+        accountController.updateAccount(map);
     }
 }

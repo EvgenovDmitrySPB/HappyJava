@@ -1,11 +1,11 @@
 package net.proselyte.crud.view;
 
-import net.proselyte.crud.builders.SkillBuilder;
 import net.proselyte.crud.controller.SkillController;
-import net.proselyte.crud.model.Skill;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class SkillView {
@@ -20,17 +20,15 @@ public class SkillView {
         //TODO: get data from console
         //TODO: build Skill instance from console data
         Scanner scanner2 = new Scanner(System.in);
-//        System.out.println("Please enter id");
-//        Long id = scanner2.nextLong();
         System.out.println("Please enter name");
 
         BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
-        String name = " ";
+        String name = "";
         if ((name = bufReader.readLine()) != null);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
 
-        SkillBuilder skillBuilder = new SkillBuilder();
-        skillBuilder.withName(name);
-        skillController.saveSkill(skillBuilder.toSkill());
+        skillController.saveSkill(map);
     }
 
     public void getSkillById(){
@@ -38,12 +36,7 @@ public class SkillView {
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
 
-        Skill skill = skillController.getSkillById(id);
-        if (skill.getId() != null){
-            System.out.println(skill.toString());
-        }else {
-            System.out.println("Skill not found by id = " + id);
-        }
+        skillController.getSkillById(id);
     }
 
     public void deleteById(){
@@ -67,8 +60,10 @@ public class SkillView {
         String name = " ";
         if ((name = bufReader.readLine()) != null);
 
-        SkillBuilder skillBuilder = new SkillBuilder();
-        skillBuilder.withId(id).withName(name);
-        skillController.updateSkill(skillBuilder.toSkill());
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+
+        skillController.updateSkill(map);
     }
 }

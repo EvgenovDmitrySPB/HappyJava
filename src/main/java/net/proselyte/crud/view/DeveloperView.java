@@ -1,19 +1,13 @@
 package net.proselyte.crud.view;
 
-import net.proselyte.crud.builders.DeveloperBuilder;
 import net.proselyte.crud.controller.AccountController;
 import net.proselyte.crud.controller.DeveloperController;
 import net.proselyte.crud.controller.SkillController;
-import net.proselyte.crud.model.Account;
-import net.proselyte.crud.model.Developer;
-import net.proselyte.crud.model.Skill;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class DeveloperView {
     private DeveloperController developerController;
@@ -25,25 +19,31 @@ public class DeveloperView {
     public void saveDeveloper(){
         //TODO: get data from console
         //TODO: build Skill instance from console data
+        Map<String, Object> map = new HashMap<>();
+
         Scanner scanner2 = new Scanner(System.in);
         System.out.println("Please enter first name");
         String firstName = scanner2.next();
+        map.put("firstName",firstName);
         System.out.println("Please enter last name");
         String lastName = scanner2.next();
+        map.put("lastName",lastName);
         System.out.println("Please enter specialty");
         String specialty = scanner2.next();
+        map.put("specialty",specialty);
 
         boolean repeatAccount = true;
-        AccountController accountController;
-        Account account = null;
+        AccountController accountController = new AccountController();
+        SkillController skillController     = new SkillController();
 
         while (repeatAccount){
             System.out.println("Please enter Account id");
             Long accountId = scanner2.nextLong();
-            accountController = new AccountController();
-            account = accountController.getAccountById(accountId);
-            if (account.getId() == null){
+            boolean findedAccount = accountController.getAccountById(accountId);
+            if (!findedAccount){
                 System.out.println("Account with id=" + accountId + " not exist!");
+            }else {
+                map.put("accountId",accountId);
             }
             System.out.println("Do you want to enter other account ? 1 - yes, 2- no");
             Scanner scanner3 = new Scanner(System.in);
@@ -53,17 +53,16 @@ public class DeveloperView {
         }
 
         boolean repeatSkill = true;
-        Set<Skill> skills = new HashSet<>();
-        SkillController skillController = new SkillController();
+        Set<Long> skillsId = new HashSet<>();
 
         while (repeatSkill){
             System.out.println("Please enter Skill id");
             Long skillId = scanner2.nextLong();
-            Skill skill = skillController.getSkillById((long) skillId.intValue());
-            if (skill.getId() == null){
+            boolean findedSkill = skillController.getSkillById((long) skillId.intValue());
+            if (!findedSkill){
                 System.out.println("Skill with id=" + skillId + " not exist!");
             }else{
-                skills.add(skill);
+                skillsId.add(skillId);
             }
             System.out.println("Do you want to enter more/other  skill ? 1 - yes, 2- no");
             Scanner scanner4 = new Scanner(System.in);
@@ -71,10 +70,9 @@ public class DeveloperView {
                 repeatSkill = false;
             }
         }
+        map.put("skillsId",skillsId);
 
-        DeveloperBuilder developerBuilder = new DeveloperBuilder();
-        developerBuilder.withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).withAccount(account).withSkill(skills);
-        developerController.saveDeveloper(developerBuilder.toDeveloper());
+        developerController.saveDeveloper(map);
     }
 
     public void getDeveloperById() {
@@ -82,12 +80,7 @@ public class DeveloperView {
         System.out.println("Please enter id");
         Long id = scanner2.nextLong();
 
-        Developer developer = developerController.getDeveloperById(id);
-        if (developer.getId() != null){
-            System.out.println(developer.toString());
-        }else {
-            System.out.println("Developer not found by id = " + id);
-        }
+        developerController.getDeveloperById(id);
     }
 
     public void deleteById(){
@@ -111,9 +104,11 @@ public class DeveloperView {
         String firstName = " ";
         if ((firstName = bufReader.readLine()) != null);
 
-        DeveloperBuilder skillBuilder = new DeveloperBuilder();
-        skillBuilder.withId(id).withFirstName(firstName);
-        developerController.updateDeveloper(skillBuilder.toDeveloper());
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("firstName", firstName);
+
+        developerController.updateDeveloper(map);
 
     }
 }

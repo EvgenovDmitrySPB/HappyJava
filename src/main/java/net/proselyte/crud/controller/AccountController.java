@@ -1,5 +1,6 @@
 package net.proselyte.crud.controller;
 
+import net.proselyte.crud.builders.AccountBuilder;
 import net.proselyte.crud.model.Account;
 import net.proselyte.crud.model.ConnectType;
 import net.proselyte.crud.repository.AccountRepository;
@@ -11,6 +12,8 @@ import net.proselyte.crud.util.SelectConnection;
 import org.hibernate.SessionFactory;
 
 import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
 
 public class AccountController {
     private AccountRepository accountRepository;
@@ -38,18 +41,31 @@ public class AccountController {
         }
     }
 
-    public void saveAccount(Account Account){
-        if(Account == null){
+    public void saveAccount(Map<String, Object> map){
+        if(map.isEmpty()){
             throw new IllegalArgumentException();
         }
-        accountRepository.save(Account);
+        String name = (String)map.get("name");
+
+        AccountBuilder skillBuilder = new AccountBuilder();
+        skillBuilder.withAccount(name);
+
+        accountRepository.save(skillBuilder.toAccount());
     }
 
-    public Account getAccountById(Long id){
+    public boolean getAccountById(Long id){
         if(id == 0){
             throw new IllegalArgumentException();
         }
-        return accountRepository.getById(id);
+
+        Account account = accountRepository.getById(id);
+        if (account.getId() != null){
+            System.out.println(account.toString());
+            return true;
+        }else {
+            System.out.println("Account not found by id = " + id);
+            return false;
+        }
     }
 
     public void deleteById(Long id) {
@@ -61,10 +77,22 @@ public class AccountController {
 
     public void getAll() {
 
-        accountRepository.getAll();
+        List<Account> list = accountRepository.getAll();
+        for (Account account:list) {
+            System.out.println(account.toString());
+        }
     }
 
-    public void updateAccount(Account account) {
-        accountRepository.update(account);
+    public void updateAccount(Map<String, Object> map) {
+        if(map.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        Long id     = (Long)map.get("id");
+        String accountData = (String)map.get("accountData");
+
+        AccountBuilder skillBuilder = new AccountBuilder();
+        skillBuilder.withId(id).withAccount(accountData);
+
+        accountRepository.update(skillBuilder.toAccount());
     }
 }

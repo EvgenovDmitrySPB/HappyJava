@@ -1,8 +1,14 @@
 package net.proselyte.crud.controller.servlets;
 
-import net.proselyte.crud.controller.AccountController;
+import net.proselyte.crud.model.Account;
 import net.proselyte.crud.model.ConnectType;
+import net.proselyte.crud.repository.AccountRepository;
+import net.proselyte.crud.repository.hibernate.HibernateAccountRepository;
+import net.proselyte.crud.repository.jdbc.JDBCAccountRepository;
+import net.proselyte.crud.util.ConnectorHibernateMySQL;
+import net.proselyte.crud.util.ConnectorMySQL;
 import net.proselyte.crud.util.SelectConnection;
+import org.hibernate.SessionFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,20 +18,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.List;
 
 @WebServlet(value = "/account", name = "account")
 public class AccountServlet extends HttpServlet {
+    private AccountRepository accountRepository;
+    private Connection connection;
+    private SessionFactory sessionFactory;
+
+    public AccountServlet() {
+        SelectConnection.getInstance().setConnectType(ConnectType.JDBC);
+
+        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+            this.connection = ConnectorMySQL.getInstance().getConnection();
+
+            if (this.connection == null){
+                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
+                return;
+            }else {
+                accountRepository = new JDBCAccountRepository(connection);
+            }
+        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
+            if (this.sessionFactory == null){
+                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
+                return;
+            }else {
+                accountRepository = new HibernateAccountRepository(sessionFactory);
+            }
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
 
-        SelectConnection.getInstance().setConnectType(ConnectType.JDBC);
-        AccountController accountController = new AccountController();
-
+        List<Account> list = accountRepository.getAll();
+        req.setAttribute("accountList", list);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/www/account/listAccount.jsp");
         requestDispatcher.forward(req, resp);
-
     }
 
     @Override
