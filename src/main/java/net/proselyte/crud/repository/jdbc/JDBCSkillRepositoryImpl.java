@@ -62,7 +62,6 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
     @Override
     public List<Skill> getAll(){
         List<Skill> list = new ArrayList<>();
-        int temp =0;
         try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,name FROM SKILLS";
             ResultSet result = statement.executeQuery(getSql);
@@ -72,10 +71,9 @@ public class JDBCSkillRepositoryImpl implements SkillRepository {
                 String name = result.getString(2);
                 skillBuilder.withId(id).withName(name);
                 Skill skill = skillBuilder.toSkill();
-                System.out.println(skill.toString());
-                temp++;
+                list.add(skill);
             }
-            if (temp ==0){
+            if (list.size() ==0){
                 System.out.println("0 element's in SKILLS");
             }
         } catch (SQLException e) {

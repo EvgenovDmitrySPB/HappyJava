@@ -62,7 +62,6 @@ public class JDBCAccountRepository implements AccountRepository {
     @Override
     public List<Account> getAll() {
         List<Account> list = new ArrayList<>();
-        int temp = 0;
         try (Statement statement = connection.createStatement()){
             String getSql = "SELECT id,accountData FROM ACCOUNTS";
             ResultSet result = statement.executeQuery(getSql);
@@ -72,10 +71,9 @@ public class JDBCAccountRepository implements AccountRepository {
                 String accountData = result.getString(2);
                 accountBuilder.withId(id).withAccount(accountData);
                 Account account = accountBuilder.toAccount();
-                System.out.println(account.toString());
-                temp++;
+                list.add(account);
             }
-            if (temp ==0){
+            if (list.size() ==0){
                 System.out.println("0 element's in ACCOUNTS ");
             }
         } catch (SQLException e) {

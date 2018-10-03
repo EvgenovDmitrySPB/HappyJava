@@ -6,7 +6,6 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,16 +70,10 @@ public class HibernateDeveloperRepository implements DeveloperRepository {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-        //    List<Developer> developers  = session.createQuery("from Developer u").list();
-
             Criteria criteria = session.createCriteria(Developer.class);
-            List<Developer> developers = criteria.list();
-            int count = 0;
-            for (Developer developer:developers) {
-                System.out.println(developer.toString());
-                count++;
-            }
-            if (count == 0){
+            list = criteria.list();
+
+            if (list.size() == 0){
                 System.out.println("0 element's in DEVELOPER ");
             }
 

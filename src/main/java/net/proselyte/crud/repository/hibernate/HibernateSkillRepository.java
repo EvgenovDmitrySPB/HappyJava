@@ -75,15 +75,9 @@ public class HibernateSkillRepository implements SkillRepository {
             session.beginTransaction();
 
             //получить все Skill
-            List<Skill> skills = session.createCriteria(Skill.class).list();
-            session.getTransaction().commit();
+            list = session.createCriteria(Skill.class).list();
 
-            int count = 0;
-            for (Skill skill:skills) {
-                System.out.println(skill.toString());
-                count++;
-            }
-            if (count == 0){
+            if (list.size() == 0){
                 System.out.println("0 element's in SKILL ");
             }
         }catch (HibernateException e){

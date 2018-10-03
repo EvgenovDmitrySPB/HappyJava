@@ -59,71 +59,71 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     @Override
     public Developer getById(Long aLong) {
         Developer developer = null;
-        Account account = null;
-        Skill skill = null;
-
-        try (Statement statement = connection.createStatement()){
-
-            String getDev = "SELECT\n" +
-                    "developers.id,\n" +
-                    "developers.firstName,\n" +
-                    "developers.lastName,\n" +
-                    "developers.specialty,\n" +
-                    "developers.account,\n" +
-                    "developer_skills.idSkill,\n" +
-                    "ISNULL(developer_skills.idSkill) AS flagSkillNull\n" +
-                    "FROM DEVELOPERS\n" +
-                    "LEFT JOIN developer_skills\n" +
-                    "  ON id =developer_skills.idDeveloper\n" +
-                    " WHERE ID = " + aLong.intValue()+
-                    " ORDER BY developers.id,developer_skills.idSkill";
-
-            ResultSet resultDev = statement.executeQuery(getDev);
-
-            DeveloperBuilder developerBuilder = new DeveloperBuilder();
-            AccountController accountController = new AccountController();
-
-            Set<Skill> skills = new HashSet<>();
-            SkillController skillController = new SkillController();
-            long currentIdDev = 0;
-
-            while (resultDev.next()) {
-                long idDeveloper = resultDev.getLong(1);
-                String firstName = resultDev.getString(2);
-                String lastName  = resultDev.getString(3);
-                String specialty = resultDev.getString(4);
-                int idAccount    = resultDev.getInt(5);
-
-                account = accountController.getAccountById((long)idAccount);
-
-                //в БД не работает правильно ISNULL
-                //ISNULL(null) выдает 1, ISNULL('что-то') дает 0
-                //ISNULL(value, 0) - не отрабатывает с 2-мя аргументами
-                int flagSkillNull = resultDev.getInt(7);
-                int idSkill = 0;
-                if (flagSkillNull == 0) {
-                    idSkill = resultDev.getInt(6);
-
-                    skill   = skillController.getSkillById((long) idSkill);
-                    if (skill.getId() != null){
-                        skills.add(skill);
-                    }
-                }
-
-                if (currentIdDev != idDeveloper){
-                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                            withAccount(account);
-                    if (skills.size() > 0) {
-                        developerBuilder.withSkill(skills);
-                    }
-                    developer = developerBuilder.toDeveloper();
-                    skills.clear();
-                    currentIdDev = idDeveloper;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Operation getAll DEVELOPERS . SQLException");
-        }
+//        Account account = null;
+//        Skill skill = null;
+//
+//        try (Statement statement = connection.createStatement()){
+//
+//            String getDev = "SELECT\n" +
+//                    "developers.id,\n" +
+//                    "developers.firstName,\n" +
+//                    "developers.lastName,\n" +
+//                    "developers.specialty,\n" +
+//                    "developers.account,\n" +
+//                    "developer_skills.idSkill,\n" +
+//                    "ISNULL(developer_skills.idSkill) AS flagSkillNull\n" +
+//                    "FROM DEVELOPERS\n" +
+//                    "LEFT JOIN developer_skills\n" +
+//                    "  ON id =developer_skills.idDeveloper\n" +
+//                    " WHERE ID = " + aLong.intValue()+
+//                    " ORDER BY developers.id,developer_skills.idSkill";
+//
+//            ResultSet resultDev = statement.executeQuery(getDev);
+//
+//            DeveloperBuilder developerBuilder = new DeveloperBuilder();
+//            AccountController accountController = new AccountController();
+//
+//            Set<Skill> skills = new HashSet<>();
+//            SkillController skillController = new SkillController();
+//            long currentIdDev = 0;
+//
+//            while (resultDev.next()) {
+//                long idDeveloper = resultDev.getLong(1);
+//                String firstName = resultDev.getString(2);
+//                String lastName  = resultDev.getString(3);
+//                String specialty = resultDev.getString(4);
+//                int idAccount    = resultDev.getInt(5);
+//
+//                account = accountController.getAccountById((long)idAccount);
+//
+//                //в БД не работает правильно ISNULL
+//                //ISNULL(null) выдает 1, ISNULL('что-то') дает 0
+//                //ISNULL(value, 0) - не отрабатывает с 2-мя аргументами
+//                int flagSkillNull = resultDev.getInt(7);
+//                int idSkill = 0;
+//                if (flagSkillNull == 0) {
+//                    idSkill = resultDev.getInt(6);
+//
+//                    skill   = skillController.getSkillById((long) idSkill);
+//                    if (skill.getId() != null){
+//                        skills.add(skill);
+//                    }
+//                }
+//
+//                if (currentIdDev != idDeveloper){
+//                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
+//                            withAccount(account);
+//                    if (skills.size() > 0) {
+//                        developerBuilder.withSkill(skills);
+//                    }
+//                    developer = developerBuilder.toDeveloper();
+//                    skills.clear();
+//                    currentIdDev = idDeveloper;
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Operation getAll DEVELOPERS . SQLException");
+//        }
         return developer;
     }
 
@@ -144,76 +144,74 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     @Override
     public List<Developer> getAll() {
         List<Developer> list = new ArrayList<>();
-        int temp = 0;
-        try (Statement statement = connection.createStatement()){
-
-            String getDev = "SELECT\n" +
-                    "developers.id,\n" +
-                    "developers.firstName,\n" +
-                    "developers.lastName,\n" +
-                    "developers.specialty,\n" +
-                    "developers.account,\n" +
-                    "developer_skills.idSkill,\n" +
-                    "ISNULL(developer_skills.idSkill) AS flagSkillNull\n" +
-                    "FROM DEVELOPERS\n" +
-                    "LEFT JOIN developer_skills\n" +
-                    "  ON id =developer_skills.idDeveloper\n" +
-                    " ORDER BY developers.id,developer_skills.idSkill";
-
-            ResultSet resultDev = statement.executeQuery(getDev);
-
-            DeveloperBuilder developerBuilder = new DeveloperBuilder();
-            Developer developer = null;
-            AccountController accountController = new AccountController();
-            Account account = null;
-
-            Set<Skill> skills = new HashSet<>();
-            SkillController skillController = new SkillController();
-            Skill skill = null;
-            long currentIdDev = 0;
-
-            while (resultDev.next()) {
-                long idDeveloper = resultDev.getLong(1);
-                String firstName = resultDev.getString(2);
-                String lastName  = resultDev.getString(3);
-                String specialty = resultDev.getString(4);
-                int idAccount    = resultDev.getInt(5);
-
-                account = accountController.getAccountById((long)idAccount);
-
-                //в БД не работает правильно ISNULL
-                //ISNULL(null) выдает 1, ISNULL('что-то') дает 0
-                //ISNULL(value, 0) - не отрабатывает с 2-мя аргументами
-                int flagSkillNull = resultDev.getInt(7);
-                int idSkill = 0;
-                if (flagSkillNull == 0) {
-                    idSkill = resultDev.getInt(6);
-
-                    skill   = skillController.getSkillById((long) idSkill);
-                    if (skill.getId() != null){
-                        skills.add(skill);
-                    }
-                }
-
-                if (currentIdDev != idDeveloper){
-                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                            withAccount(account);
-                    if (skills.size() > 0) {
-                        developerBuilder.withSkill(skills);
-                    }
-                    developer = developerBuilder.toDeveloper();
-                    System.out.println(developer.toString());
-                    skills.clear();
-                    temp++;
-                    currentIdDev = idDeveloper;
-                }
-            }
-            if (temp ==0){
-                System.out.println("0 element's in DEVELOPERS ");
-            }
-        } catch (SQLException e) {
-            System.out.println("Operation getAll DEVELOPERS . SQLException");
-        }
+//        try (Statement statement = connection.createStatement()){
+//
+//            String getDev = "SELECT\n" +
+//                    "developers.id,\n" +
+//                    "developers.firstName,\n" +
+//                    "developers.lastName,\n" +
+//                    "developers.specialty,\n" +
+//                    "developers.account,\n" +
+//                    "developer_skills.idSkill,\n" +
+//                    "ISNULL(developer_skills.idSkill) AS flagSkillNull\n" +
+//                    "FROM DEVELOPERS\n" +
+//                    "LEFT JOIN developer_skills\n" +
+//                    "  ON id =developer_skills.idDeveloper\n" +
+//                    " ORDER BY developers.id,developer_skills.idSkill";
+//
+//            ResultSet resultDev = statement.executeQuery(getDev);
+//
+//            DeveloperBuilder developerBuilder = new DeveloperBuilder();
+//            Developer developer = null;
+//            AccountController accountController = new AccountController();
+//            Account account = null;
+//
+//            Set<Skill> skills = new HashSet<>();
+//            SkillController skillController = new SkillController();
+//            Skill skill = null;
+//            long currentIdDev = 0;
+//
+//            while (resultDev.next()) {
+//                long idDeveloper = resultDev.getLong(1);
+//                String firstName = resultDev.getString(2);
+//                String lastName  = resultDev.getString(3);
+//                String specialty = resultDev.getString(4);
+//                int idAccount    = resultDev.getInt(5);
+//
+//                account = accountController.getAccountById((long)idAccount);
+//
+//                //в БД не работает правильно ISNULL
+//                //ISNULL(null) выдает 1, ISNULL('что-то') дает 0
+//                //ISNULL(value, 0) - не отрабатывает с 2-мя аргументами
+//                int flagSkillNull = resultDev.getInt(7);
+//                int idSkill = 0;
+//                if (flagSkillNull == 0) {
+//                    idSkill = resultDev.getInt(6);
+//
+//                    skill   = skillController.getSkillById((long) idSkill);
+//                    if (skill.getId() != null){
+//                        skills.add(skill);
+//                    }
+//                }
+//
+//                if (currentIdDev != idDeveloper){
+//                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
+//                            withAccount(account);
+//                    if (skills.size() > 0) {
+//                        developerBuilder.withSkill(skills);
+//                    }
+//                    developer = developerBuilder.toDeveloper();
+//                    list.add(developer);
+//                    skills.clear();
+//                    currentIdDev = idDeveloper;
+//                }
+//            }
+//            if (list.size() ==0){
+//                System.out.println("0 element's in DEVELOPERS ");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Operation getAll DEVELOPERS . SQLException");
+//        }
         return list;
     }
 
