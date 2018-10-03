@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<br>
 <div>
     <button onclick="location.href='/'">Main</button>
     <button onclick="location.href='/developer'">Developer</button>
@@ -18,5 +19,6 @@
     <button onclick="location.href='/account'">Account</button>
     <button onclick="location.href='/phone'">Phone</button>
 </div>
+<br>
 </body>
 </html>

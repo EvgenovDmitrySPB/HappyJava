@@ -13,30 +13,7 @@
   </head>
   <body>
   <jsp:include page="/www/header.jsp" />
-  <%--<div style="width: 1200px; margin-left: auto; margin-right: auto;">--%>
-      <%--<table cellpadding="10">--%>
-          <%--<tr>--%>
-              <%--<th>Id</th>--%>
-              <%--<th>Title</th>--%>
-              <%--<th>Description</th>--%>
-              <%--<th>Detail</th>--%>
-              <%--<th>Category</th>--%>
-              <%--<th>Date</th>--%>
-              <%--<th>Image</th>--%>
-              <%--<th></th>--%>
-          <%--</tr>--%>
-          <%--<c:forEach items="accountList" var="p">--%>
-              <%--<tr>--%>
-                  <%--<td>${p.id}</td>--%>
-                  <%--<td>${p.accountData}</td>--%>
-                  <%--<td>--%>
-                      <%--<a href="edit?id=${p.id}">Edit</a>--%>
-                      <%--<a href="delete?id=${p.id}">Delete</a>--%>
-                  <%--</td>--%>
-              <%--</tr>--%>
-          <%--</c:forEach>--%>
-      <%--</table>--%>
-  <%--</div>--%>
+  <p>Welcome to my first CRUDE application.</p>
   <jsp:include page="/www/footer.jsp" />
   </body>
 </html>

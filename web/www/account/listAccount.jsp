@@ -1,37 +1,39 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: d.evgenov
-  Date: 02.10.2018
-  Time: 16:22
+  Date: 03.10.2018
+  Time: 17:31
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title account list</title>
+    <title>Account</title>
 </head>
 <body>
-<div>
-    <div>
-        <button onclick="location.href='index.jsp'">Main</button>
-        <button onclick="location.href='/developer'">Developer</button>
-        <button onclick="location.href='/skill'">Skill</button>
-        <button onclick="location.href='/account'">Account</button>
-        <button onclick="location.href='/phone'">Phone</button>
-    </div>
-    <p>Account list</p>
-    <table border="1">
+<div style="width: 1200px; margin-left: 10px; margin-right: auto;">
+    <jsp:include page="/www/header.jsp" />
+    <table cellpadding="10" border="1">
         <tr>
-            <td>Настя пришщла</td>
-            <td>Столбец 2</td>
-            <td>Столбец 3</td>
+            <th width="50" align="center">Id</th>
+            <th width="300" align="left">accountData</th>
+            <th width="100">Menu</th>
         </tr>
-        <tr>
-            <td>Столбец 1</td>
-            <td>Столбец 2</td>
-            <td>Столбец 3</td>
-        </tr>
+        <c:forEach items="${accountList}" var="p">
+            <tr>
+                <td width="50" align="center">${p.getId()}</td>
+                <td width="300" align="left">${p.accountData}...</td>
+                <td>
+                    <%--<a href="edit?id=${p.id}">Edit</a>--%>
+                    <%--<a href="delete?id=${p.id}">Delete</a>--%>
+                    <button style="width: 50px" onclick="location.href='edit?id=${p.id}'">Edit</button>
+                    <button onclick="location.href='delete?id=${p.id}'">Delete</button>
+                </td>
+            </tr>
+        </c:forEach>
     </table>
 </div>
+<jsp:include page="/www/footer.jsp" />
 </body>
 </html>
