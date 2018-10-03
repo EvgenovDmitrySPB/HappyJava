@@ -28,7 +28,7 @@
                     <%--<a href="edit?id=${p.id}">Edit</a>--%>
                     <%--<a href="delete?id=${p.id}">Delete</a>--%>
                     <button style="width: 50px" onclick="location.href='edit?id=${p.id}'">Edit</button>
-                    <button onclick="location.href='delete?id=${p.id}'">Delete</button>
+                    <button style="width: 50px" onclick="location.href='delete?id=${p.id}'">Delete</button>
                 </td>
             </tr>
         </c:forEach>
