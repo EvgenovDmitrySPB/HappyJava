@@ -9,11 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Happy java application</title>
   </head>
   <body>
-  <jsp:include page="header.jsp" />
+  <jsp:include page="www/header.jsp" />
   <p>Welcome to my first CRUDE application.</p>
-  <jsp:include page="footer.jsp" />
+
+  <jsp:include page="www/footer.jsp" />
   </body>
 </html>
