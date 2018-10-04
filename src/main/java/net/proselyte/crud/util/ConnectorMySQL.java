@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public final class ConnectorMySQL {
-   //private static final String PATH = "src\\main\\resources\\liquibase\\liquibase.properties";
+   //private static final String PATH = "C:\\Users\\leoX\\IdeaProjects\\HappyJava\\src\\main\\resources\\liquibase\\liquibase.properties";
    private static final String PATH = "C:\\Users\\d.evgenov\\IdeaProjects\\ProgramJDBC_MVC1\\src\\main\\resources\\liquibase\\liquibase.properties";
+
     private static ConnectorMySQL INSTANCE = null;
     private static Connection CONNECTION = getMySqlJDBCConnection();
 
@@ -19,12 +20,6 @@ public final class ConnectorMySQL {
         }
         return INSTANCE;
     }
-
-    //класс создан по паттерну Singleton и конструктор не нужен
-//    public ConnectorMySQL() {
-//        this.CONNECTION = getMySqlConnection();
-//        //printConnectInfo();
-//    }
 
     public Connection getConnection(){
         if (CONNECTION != null){
@@ -73,6 +68,12 @@ public final class ConnectorMySQL {
             System.out.println("Not have information");
         }
     }
-
-
+    public void closeConnection() {
+        try {
+            getConnection().close();
+            System.out.println("Connection JDBC closed");
+        }catch (SQLException e){
+            System.out.println("SQLException for try to close connection");
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package net.proselyte.crud.util;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -52,6 +53,15 @@ public class ConnectorHibernateMySQL {
         }
 
         return sessionFactory;
+    }
+
+    public void closeSessionFactory() {
+        try {
+            getSessionFactory().close();
+            System.out.println("Session factory closed");
+        }catch (HibernateException e){
+            System.out.println("HibernateException for try to close session factory");
+        }
     }
 
 }

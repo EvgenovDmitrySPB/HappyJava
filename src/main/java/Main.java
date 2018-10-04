@@ -1,4 +1,6 @@
 import net.proselyte.crud.model.ConnectType;
+import net.proselyte.crud.util.ConnectorHibernateMySQL;
+import net.proselyte.crud.util.ConnectorMySQL;
 import net.proselyte.crud.util.SelectConnection;
 import net.proselyte.crud.view.AccountView;
 import net.proselyte.crud.view.DeveloperView;
@@ -63,6 +65,11 @@ public class Main {
                 scannerRepeat = new Scanner(System.in);
                 if (scannerRepeat.nextInt() != 1) {
                     repeatAll = false;
+                    if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+                        ConnectorMySQL.getInstance().closeConnection();
+                    }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+                        ConnectorHibernateMySQL.getInstance().closeSessionFactory();
+                    }
                 }
             }
             if (resultAll == 2) {
@@ -85,6 +92,11 @@ public class Main {
                 scannerRepeat = new Scanner(System.in);
                 if (scannerRepeat.nextInt() != 1) {
                     repeatAll = false;
+                    if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+                        ConnectorMySQL.getInstance().closeConnection();
+                    }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+                        ConnectorHibernateMySQL.getInstance().closeSessionFactory();
+                    }
                 }
             }
             if (resultAll == 3) {
@@ -107,6 +119,11 @@ public class Main {
                 scannerRepeat = new Scanner(System.in);
                 if (scannerRepeat.nextInt() != 1) {
                     repeatAll = false;
+                    if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+                        ConnectorMySQL.getInstance().closeConnection();
+                    }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+                        ConnectorHibernateMySQL.getInstance().closeSessionFactory();
+                    }
                 }
             }
 
