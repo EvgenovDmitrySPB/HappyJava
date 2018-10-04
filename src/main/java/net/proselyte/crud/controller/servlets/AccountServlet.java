@@ -58,7 +58,7 @@ public class AccountServlet extends HttpServlet {
         List<Account> list = accountRepository.getAll();
         req.setAttribute("accountList", list);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/www/account/listAccount.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("../web/www/account/listAccount.jsp");
         requestDispatcher.forward(req, resp);
     }
 
