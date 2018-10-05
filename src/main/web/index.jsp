@@ -14,6 +14,10 @@
   <body>
   <jsp:include page="www/header.jsp" />
   <p>Welcome to my first CRUDE application.</p>
+  <p>Today is </p>
+  <%
+    java.util.Date date = new java.util.Date();
+  %>
 
   <jsp:include page="www/footer.jsp" />
   </body>

@@ -53,6 +53,8 @@ public class SkillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        req.setCharacterEncoding("Cp1251");
+
         List<Skill> list = skillRepository.getAll();
         req.setAttribute("skillList", list);
 
@@ -63,6 +65,7 @@ public class SkillServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        req.setCharacterEncoding("Cp1251");
 
         Long id = null;
         String name = "";

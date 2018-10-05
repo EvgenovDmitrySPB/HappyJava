@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: d.evgenov
@@ -13,16 +12,16 @@
     <title>Edit account</title>
 </head>
 <body>
-<p>Edit account</p>
+<p>Edit skill</p>
 <div style="width: 100px; margin-left: 50px; margin-right: auto">
-    <form action="/account" method="post">
+    <form action="/skill" method="post">
         <input type="hidden" name="id" value="${param.id}">
-        <input type="text" name="accountData" value="${param.accountData}">
+        <input type="text" name="name" value="${param.name}">
         <input type="hidden" name="method" value="PUT">
         <br><br>
         <td><input type="submit" value="Update"></td>
     </form>
-    <form action="/account" method="get">
+    <form action="/skill" method="get">
         <td><input type="submit" value="Cancel"></td>
     </form>
 </div>

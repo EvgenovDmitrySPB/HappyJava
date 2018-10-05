@@ -158,18 +158,16 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
                     "ISNULL(developer_skills.idSkill) AS flagSkillNull\n" +
                     "FROM DEVELOPERS\n" +
                     "LEFT JOIN developer_skills\n" +
-                    "  ON id =developer_skills.idDeveloper\n" +
-                    " ORDER BY developers.id,developer_skills.idSkill";
+                    " ON id =developer_skills.idDeveloper\n" +
+                    "ORDER BY developers.id, developer_skills.idSkill";
 
             ResultSet resultDev = statement.executeQuery(getDev);
 
             DeveloperBuilder developerBuilder = new DeveloperBuilder();
             Developer developer = null;
             Account account     = null;
-
+            Skill skill         = null;
             Set<Skill> skills = new HashSet<>();
-            Skill skill = null;
-            long currentIdDev = 0;
 
             while (resultDev.next()) {
                 long idDeveloper = resultDev.getLong(1);
@@ -194,17 +192,19 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
                     }
                 }
 
-                if (currentIdDev != idDeveloper){
                     developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                            withAccount(account);
+                    withAccount(account);
                     if (skills.size() > 0) {
                         developerBuilder.withSkill(skills);
                     }
                     developer = developerBuilder.toDeveloper();
+                    if (!list.contains(developer)){
+                        list.add(developer);
+                    }
                     list.add(developer);
                     skills.clear();
-                    currentIdDev = idDeveloper;
-                }
+                    currentIdDev = developer.getId();
+
             }
             if (list.size() ==0){
                 System.out.println("0 element's in DEVELOPERS ");
