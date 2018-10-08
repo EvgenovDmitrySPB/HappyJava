@@ -16,8 +16,8 @@
 <p>Edit account</p>
 <div style="width: 100px; margin-left: 50px; margin-right: auto">
     <form action="/account" method="post">
-        <input type="hidden" name="id" value="${param.id}">
-        <input type="text" name="accountData" value="${param.accountData}">
+        <span>Name:</span><input type="hidden" readonly="readonly" name="id" value="${param.id}">
+        <span>Name:</span><input type="text" name="accountData" value="${param.accountData}">
         <input type="hidden" name="method" value="PUT">
         <br><br>
         <td><input type="submit" value="Update"></td>

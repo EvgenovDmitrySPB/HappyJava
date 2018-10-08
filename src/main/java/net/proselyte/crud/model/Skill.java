@@ -1,6 +1,7 @@
 package net.proselyte.crud.model;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,5 +61,11 @@ public class Skill extends ClassId {
                 '}';
     }
 
-
+    //Добавил компаратор, чтобы класс Skill сортировать по id в выдаче Developer(getAll)
+    public static final Comparator<Skill> COMPARE_BY_ID = new Comparator<Skill>() {
+        @Override
+        public int compare(Skill leftId, Skill rightId) {
+            return (leftId.getId().intValue() - rightId.getId().intValue());
+        }
+    };
 }

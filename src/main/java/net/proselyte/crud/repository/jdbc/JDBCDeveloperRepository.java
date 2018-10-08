@@ -9,10 +9,7 @@ import net.proselyte.crud.repository.DeveloperRepository;
 import net.proselyte.crud.repository.SkillRepository;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class JDBCDeveloperRepository implements DeveloperRepository {
     private Connection connection;
@@ -146,6 +143,7 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     @Override
     public List<Developer> getAll() {
         List<Developer> list = new ArrayList<>();
+
         try (Statement statement = connection.createStatement()){
 
             String getDev = "SELECT\n" +
@@ -167,7 +165,8 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
             Developer developer = null;
             Account account     = null;
             Skill skill         = null;
-            Set<Skill> skills = new HashSet<>();
+            Set<Skill> skills = new TreeSet<>(Skill.COMPARE_BY_ID);
+            long curDev = 0;
 
             while (resultDev.next()) {
                 long idDeveloper = resultDev.getLong(1);
@@ -176,8 +175,18 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
                 String specialty = resultDev.getString(4);
                 int idAccount    = resultDev.getInt(5);
 
-                account = accountRepository.getById((long)idAccount);
+                if (resultDev.isFirst()){
+                    curDev = idDeveloper;
+                }
 
+                if (curDev!= idDeveloper){
+                    list.add(developerBuilder.toDeveloper());
+                    skills = new TreeSet<>(Skill.COMPARE_BY_ID);
+                    account = null;
+                    curDev = idDeveloper;
+                }
+
+                //Собираем skill и заносим в SET
                 //в БД не работает правильно ISNULL
                 //ISNULL(null) выдает 1, ISNULL('что-то') дает 0
                 //ISNULL(value, 0) - не отрабатывает с 2-мя аргументами
@@ -189,22 +198,30 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
                     skill   = skillRepository.getById((long) idSkill);
                     if (skill.getId() != null){
                         skills.add(skill);
+
                     }
                 }
 
-                    developerBuilder.withId(idDeveloper).withFirstName(firstName).withLastName(lastName).withSpecialty(specialty).
-                    withAccount(account);
-                    if (skills.size() > 0) {
-                        developerBuilder.withSkill(skills);
-                    }
-                    developer = developerBuilder.toDeveloper();
-                    if (!list.contains(developer)){
-                        list.add(developer);
-                    }
-                    list.add(developer);
-                    skills.clear();
-                    currentIdDev = developer.getId();
+                    developerBuilder.withId(idDeveloper)
+                            .withFirstName(firstName)
+                            .withLastName(lastName)
+                            .withSpecialty(specialty);
 
+                //Собираем Account
+                account = accountRepository.getById((long)idAccount);
+                if (account != null){
+                    developerBuilder.withAccount(account);
+                }
+                if (skills.size() > 0) {
+
+                    developerBuilder.withSkill(skills);
+                }
+                if (resultDev.isLast()){
+                    list.add(developerBuilder.toDeveloper());
+                    skills = new TreeSet<>(Skill.COMPARE_BY_ID);
+                    account = null;
+                    curDev = idDeveloper;
+                }
             }
             if (list.size() ==0){
                 System.out.println("0 element's in DEVELOPERS ");

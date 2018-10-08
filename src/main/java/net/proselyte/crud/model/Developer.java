@@ -113,7 +113,7 @@ public class Developer extends ClassId  {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", specialty='" + specialty + '\'' +
-                ", account=" + account +
+                ", account='" + account +
                 ", skills=" + skills +
                 ", phones=" + phones +
                 '}';

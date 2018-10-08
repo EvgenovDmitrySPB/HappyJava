@@ -14,9 +14,10 @@
 <body>
 Do you want to delete skill?
 <br><br>
+<div style="width: 100px; margin-left: 50px; margin-right: auto">
 <form action="/skill" method="post">
-    <input type="text" name="id" readonly="readonly" value="${param.id}">
-    <input type="text" name="name" readonly="readonly"  value="${param.name}">
+    <span>Id:</span> <input type="text" name="id" readonly="readonly" value="${param.id}">
+    <span>Name:</span> <input type="text" name="name" readonly="readonly"  value="${param.name}">
     <input type="hidden" name="method" value="DELETE">
     <br><br>
         <td><input type="submit" value="Yes"></td>
@@ -24,5 +25,6 @@ Do you want to delete skill?
 <form action="/skill" method="get">
     <td><input type="submit" value="Cancel"></td>
 </form>
+</div>
 </body>
 </html>

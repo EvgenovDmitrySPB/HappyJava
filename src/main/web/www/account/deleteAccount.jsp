@@ -14,9 +14,10 @@
 <body>
 Do you want to delete account?
 <br><br>
+<div style="width: 100px; margin-left: 50px; margin-right: auto">
 <form action="/account" method="post">
-    <input type="text" name="id" readonly="readonly" value="${param.id}">
-    <input type="text" name="accountData" readonly="readonly"  value="${param.accountData}">
+    <span>Id:</span> <input type="text" name="id" readonly="readonly" value="${param.id}">
+    <span>AccountData:</span> <input type="text" name="accountData" readonly="readonly"  value="${param.accountData}">
     <input type="hidden" name="method" value="DELETE">
     <br><br>
         <td><input type="submit" value="Yes"></td>
@@ -24,5 +25,6 @@ Do you want to delete account?
 <form action="/account" method="get">
     <td><input type="submit" value="Cancel"></td>
 </form>
+</div>
 </body>
 </html>
