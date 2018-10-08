@@ -28,7 +28,6 @@ public class AccountServlet extends HttpServlet {
     private SessionFactory sessionFactory;
 
     public AccountServlet() {
-        SelectConnection.getInstance().setConnectType(ConnectType.JDBC);
 
         if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
             this.connection = ConnectorMySQL.getInstance().getConnection();
