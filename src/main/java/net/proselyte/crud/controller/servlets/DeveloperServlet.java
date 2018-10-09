@@ -53,7 +53,9 @@ public class DeveloperServlet extends HttpServlet {
 
         if (SelectConnection.getInstance().getConnectType() != null){
 
-            checkCreateRepository();
+            if (skillRepository == null){
+                checkCreateRepository();
+            }
 
             List<Developer> list = developerRepository.getAll();
             req.setAttribute("developerList", list);

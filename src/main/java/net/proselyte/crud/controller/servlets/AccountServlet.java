@@ -38,7 +38,9 @@ public class AccountServlet extends HttpServlet {
 
         if (SelectConnection.getInstance().getConnectType() != null){
 
-            checkCreateRepository();
+            if (accountRepository == null){
+                checkCreateRepository();
+            }
 
             List<Account> list = accountRepository.getAll();
             req.setAttribute("accountList", list);

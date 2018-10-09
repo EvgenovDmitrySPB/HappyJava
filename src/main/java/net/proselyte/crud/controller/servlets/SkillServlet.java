@@ -38,7 +38,9 @@ public class SkillServlet extends HttpServlet {
 
         if (SelectConnection.getInstance().getConnectType() != null){
 
-            checkCreateRepository();
+            if (skillRepository == null){
+                checkCreateRepository();
+            }
 
             List<Skill> list = skillRepository.getAll();
             req.setAttribute("skillList", list);
