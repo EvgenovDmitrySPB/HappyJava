@@ -42,28 +42,8 @@ public class DeveloperServlet extends HttpServlet {
 
     public DeveloperServlet() {
 
-        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
-            this.connection = ConnectorMySQL.getInstance().getConnection();
+        checkCreateRepository();
 
-            if (this.connection == null){
-                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
-                return;
-            }else {
-                skillRepository = new JDBCSkillRepositoryImpl(connection);
-                developerRepository = new JDBCDeveloperRepository(connection);
-                accountRepository = new JDBCAccountRepository(connection);
-            }
-        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
-            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
-            if (this.sessionFactory == null){
-                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
-                return;
-            }else {
-                accountRepository = new HibernateAccountRepository(sessionFactory);
-                skillRepository = new HibernateSkillRepository(sessionFactory);
-                developerRepository = new HibernateDeveloperRepository(sessionFactory);
-            }
-        }
     }
 
     @Override
@@ -71,11 +51,20 @@ public class DeveloperServlet extends HttpServlet {
         resp.setContentType("text/html");
         req.setCharacterEncoding("Cp1251");
 
-        List<Developer> list = developerRepository.getAll();
-        req.setAttribute("developerList", list);
+        if (SelectConnection.getInstance().getConnectType() != null){
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/developer/listDeveloper.jsp");
-        requestDispatcher.forward(req, resp);
+            checkCreateRepository();
+
+            List<Developer> list = developerRepository.getAll();
+            req.setAttribute("developerList", list);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/developer/listDeveloper.jsp");
+            requestDispatcher.forward(req, resp);
+        }else{
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/404.jsp");
+            requestDispatcher.forward(req, resp);
+
+        }
     }
 
     @Override
@@ -166,4 +155,30 @@ public class DeveloperServlet extends HttpServlet {
         PrintWriter messageWriter = resp.getWriter();
         messageWriter.println("<h1>" + message + "<h1>");
     }
+
+    private void checkCreateRepository(){
+        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+            this.connection = ConnectorMySQL.getInstance().getConnection();
+
+            if (this.connection == null){
+                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
+                return;
+            }else {
+                skillRepository = new JDBCSkillRepositoryImpl(connection);
+                developerRepository = new JDBCDeveloperRepository(connection);
+                accountRepository = new JDBCAccountRepository(connection);
+            }
+        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
+            if (this.sessionFactory == null){
+                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
+                return;
+            }else {
+                accountRepository = new HibernateAccountRepository(sessionFactory);
+                skillRepository = new HibernateSkillRepository(sessionFactory);
+                developerRepository = new HibernateDeveloperRepository(sessionFactory);
+            }
+        }
+    }
 }
+

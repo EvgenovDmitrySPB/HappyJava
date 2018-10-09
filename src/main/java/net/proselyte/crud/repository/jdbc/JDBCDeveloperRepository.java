@@ -129,12 +129,13 @@ public class JDBCDeveloperRepository implements DeveloperRepository {
     @Override
     public void deleteById(Long aLong) {
         try (Statement statement = connection.createStatement()){
-            String getSql = "DELETE FROM developers WHERE id = " + aLong.intValue();
-            statement.executeUpdate(getSql);
-            System.out.println("Operation delete DEVELOPERS. Ok");
             String getSqlSkill = "DELETE FROM developer_skills WHERE idDeveloper = " + aLong.intValue();
             System.out.println("Operation delete developer_skills. Ok");
             statement.executeUpdate(getSqlSkill);
+            String getSql = "DELETE FROM developers WHERE id = " + aLong.intValue();
+            statement.executeUpdate(getSql);
+            System.out.println("Operation delete DEVELOPERS. Ok");
+
         }catch (SQLException e){
             System.out.println("Operation delete DEVELOPERS. SQLException");
         }

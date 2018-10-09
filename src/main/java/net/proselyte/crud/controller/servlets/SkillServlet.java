@@ -28,25 +28,7 @@ public class SkillServlet extends HttpServlet {
     private SessionFactory sessionFactory;
 
     public SkillServlet() {
-
-        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
-            this.connection = ConnectorMySQL.getInstance().getConnection();
-
-            if (this.connection == null){
-                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
-                return;
-            }else {
-                skillRepository = new JDBCSkillRepositoryImpl(connection);
-            }
-        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
-            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
-            if (this.sessionFactory == null){
-                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
-                return;
-            }else {
-                skillRepository = new HibernateSkillRepository(sessionFactory);
-            }
-        }
+        checkCreateRepository();
     }
 
     @Override
@@ -54,11 +36,19 @@ public class SkillServlet extends HttpServlet {
         resp.setContentType("text/html");
         req.setCharacterEncoding("Cp1251");
 
-        List<Skill> list = skillRepository.getAll();
-        req.setAttribute("skillList", list);
+        if (SelectConnection.getInstance().getConnectType() != null){
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/skill/listSkill.jsp");
-        requestDispatcher.forward(req, resp);
+            checkCreateRepository();
+
+            List<Skill> list = skillRepository.getAll();
+            req.setAttribute("skillList", list);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/skill/listSkill.jsp");
+            requestDispatcher.forward(req, resp);
+        }else{
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/404.jsp");
+            requestDispatcher.forward(req, resp);
+        }
     }
 
     @Override
@@ -109,5 +99,26 @@ public class SkillServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+    }
+
+    private void checkCreateRepository(){
+        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+            this.connection = ConnectorMySQL.getInstance().getConnection();
+
+            if (this.connection == null){
+                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
+                return;
+            }else {
+                skillRepository = new JDBCSkillRepositoryImpl(connection);
+            }
+        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
+            if (this.sessionFactory == null){
+                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
+                return;
+            }else {
+                skillRepository = new HibernateSkillRepository(sessionFactory);
+            }
+        }
     }
 }

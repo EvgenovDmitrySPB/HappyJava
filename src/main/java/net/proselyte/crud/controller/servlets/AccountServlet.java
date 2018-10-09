@@ -28,25 +28,7 @@ public class AccountServlet extends HttpServlet {
     private SessionFactory sessionFactory;
 
     public AccountServlet() {
-
-        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
-            this.connection = ConnectorMySQL.getInstance().getConnection();
-
-            if (this.connection == null){
-                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
-                return;
-            }else {
-                accountRepository = new JDBCAccountRepository(connection);
-            }
-        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
-            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
-            if (this.sessionFactory == null){
-                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
-                return;
-            }else {
-                accountRepository = new HibernateAccountRepository(sessionFactory);
-            }
-        }
+        checkCreateRepository();
     }
 
     @Override
@@ -54,11 +36,19 @@ public class AccountServlet extends HttpServlet {
         resp.setContentType("text/html");
         req.setCharacterEncoding("Cp1251");
 
-        List<Account> list = accountRepository.getAll();
-        req.setAttribute("accountList", list);
+        if (SelectConnection.getInstance().getConnectType() != null){
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/account/listAccount.jsp");
-        requestDispatcher.forward(req, resp);
+            checkCreateRepository();
+
+            List<Account> list = accountRepository.getAll();
+            req.setAttribute("accountList", list);
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/account/listAccount.jsp");
+            requestDispatcher.forward(req, resp);
+        }else{
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/404.jsp");
+            requestDispatcher.forward(req, resp);
+        }
     }
 
     @Override
@@ -117,5 +107,26 @@ public class AccountServlet extends HttpServlet {
         String message = "Hello Dmitry DELETE ";
         PrintWriter messageWriter = response.getWriter();
         messageWriter.println("<h1>" + message + "<h1>");
+    }
+
+    private void checkCreateRepository(){
+        if (SelectConnection.getInstance().getConnectType() == ConnectType.JDBC){
+            this.connection = ConnectorMySQL.getInstance().getConnection();
+
+            if (this.connection == null){
+                System.out.println("Warning! You don't have [JDBC] connection with MySQL");
+                return;
+            }else {
+                accountRepository = new JDBCAccountRepository(connection);
+            }
+        }else if (SelectConnection.getInstance().getConnectType() == ConnectType.HIBERNATE){
+            this.sessionFactory = ConnectorHibernateMySQL.getInstance().getSessionFactory();
+            if (this.sessionFactory == null){
+                System.out.println("Warning! You don't have {Hibernate} SessionFactory with MySQL");
+                return;
+            }else {
+                accountRepository = new HibernateAccountRepository(sessionFactory);
+            }
+        }
     }
 }
