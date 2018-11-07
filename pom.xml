@@ -12,14 +12,16 @@
     <url>http://www.example.com</url>
 
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <mysqlConnectorVersion>5.1.35</mysqlConnectorVersion>
         <lombokVersion>1.16.18</lombokVersion>
         <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
         <servletVersion>2.5</servletVersion>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <liquiBaseVersion>3.4.2</liquiBaseVersion>
+        <spring.version>4.0.5.RELEASE</spring.version>
+        <spring-security-version>4.0.1.RELEASE</spring-security-version>
     </properties>
 
     <build>
@@ -86,29 +88,27 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--
-            <plugin>
-               <groupId>org.liquibase</groupId>
-               <artifactId>liquibase-maven-plugin</artifactId>
-               <version>${liquiBaseVersion}</version>
-               <configuration>
-                   <propertyFile>liquibase/liquibase.properties</propertyFile>
-                   <changeLogFile>liquibase/db.changelog-master.xml</changeLogFile>
-               </configuration>
-                   <executions>
-                     <execution>
-                       <phase>process-resources</phase>
-                       <goals>
-                         <goal>changelogSync</goal>
-                       </goals>
-                     </execution>
-                   </executions>
-            </plugin>
-            -->
+            <!--<plugin>-->
+               <!--<groupId>org.liquibase</groupId>-->
+               <!--<artifactId>liquibase-maven-plugin</artifactId>-->
+               <!--<version>${liquiBaseVersion}</version>-->
+               <!--<configuration>-->
+                   <!--<propertyFile>liquibase/liquibase.properties</propertyFile>-->
+                   <!--<changeLogFile>liquibase/db.changelog-master.xml</changeLogFile>-->
+               <!--</configuration>-->
+                   <!--<executions>-->
+                     <!--<execution>-->
+                       <!--<phase>process-resources</phase>-->
+                       <!--<goals>-->
+                         <!--<goal>update</goal>-->
+                       <!--</goals>-->
+                     <!--</execution>-->
+                   <!--</executions>-->
+            <!--</plugin>-->
      </plugins>
      <finalName>ServerHappyJava</finalName>
     </build>
@@ -145,5 +145,60 @@
             <version>2.3.1</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--Spring framework-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+
+        <!--AspectJ-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.8.8</version>
+        </dependency>
+
+
+
     </dependencies>
 </project>
