@@ -1,4 +1,5 @@
-<%@ page import="net.proselyte.crud.util.SelectConnection" %><%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%@ page import="net.proselyte.crud.util.SelectConnection" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <%--
   Created by IntelliJ IDEA.
   User: d.evgenov
@@ -12,7 +13,7 @@
     <title>Happy java application</title>
   </head>
   <body>
-  <jsp:include page="www/header.jsp" />
+  <jsp:include page="header.jsp" />
   <p>Welcome to the CRUDE application.</p>
   <%
     java.util.Date date = new java.util.Date();
@@ -30,6 +31,6 @@
 }
 %>
   <br>
-  <jsp:include page="www/footer.jsp" />
+  <jsp:include page="footer.jsp" />
   </body>
 </html>

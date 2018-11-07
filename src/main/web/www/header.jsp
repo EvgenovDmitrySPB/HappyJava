@@ -13,7 +13,7 @@
 <body>
 <br>
 <div>
-    <button onclick="location.href='..'">Main</button>
+    <button onclick="location.href='/'">Main</button>
     <button onclick="location.href='/developer'">Developer</button>
     <button onclick="location.href='/skill'">Skill</button>
     <button onclick="location.href='/account'">Account</button>
