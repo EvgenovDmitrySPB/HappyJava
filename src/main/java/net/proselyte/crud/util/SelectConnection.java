@@ -51,7 +51,7 @@ public class SelectConnection extends HttpServlet {
             connectorHibernateMySQL.getSessionFactory();
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/www/");
         requestDispatcher.forward(req, resp);
 
     }

@@ -12,7 +12,7 @@
 </head>
 <body>
 <br>
-<nav><a href="/">Main</a> | <a href="/developer">Developer</a> | <a href="/skill">Skill</a> | <a href="/account">Account</a> | <a href="/phone">Phone</a> </nav>
+<nav><a href="/www/">Main</a> | <a href="/developer">Developer</a> | <a href="/skill">Skill</a> | <a href="/account">Account</a> | <a href="/phone">Phone</a> </nav>
 <br>
 </body>
 </html>

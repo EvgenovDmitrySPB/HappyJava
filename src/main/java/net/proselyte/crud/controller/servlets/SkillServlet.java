@@ -45,10 +45,10 @@ public class SkillServlet extends HttpServlet {
             List<Skill> list = skillRepository.getAll();
             req.setAttribute("skillList", list);
 
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("skill/listSkill.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/skill/listSkill.jsp");
             requestDispatcher.forward(req, resp);
         }else{
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("404.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/404.jsp");
             requestDispatcher.forward(req, resp);
         }
     }
@@ -89,7 +89,7 @@ public class SkillServlet extends HttpServlet {
         List<Skill> list = skillRepository.getAll();
         req.setAttribute("skillList", list);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("skill/listSkill.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/skill/listSkill.jsp");
         requestDispatcher.forward(req, resp);
     }
 

@@ -15,7 +15,7 @@ public class PhoneServlet extends HttpServlet {
         resp.setContentType("text/html");
         req.setCharacterEncoding("Cp1251");
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("phone.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/phone.jsp");
         requestDispatcher.forward(req, resp);
 
     }
