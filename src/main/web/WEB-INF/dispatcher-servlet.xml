@@ -10,12 +10,11 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <mvc:annotation-driven/><!-- Включает такие теги как @RequestMapping, @RestController и т.д., т.е. те, которые нужны для работы Spring MVC -->
-    <context:component-scan base-package="net.proselyte.crud.controller.dispatcher"/><!-- Эта строчка включает auto scanning спринга, так он понимает где ему искать аннотированные классы, чтобы зарегистрировать их как бины в спринговском контексте -->
-    <!-- С помощью этого бина ViewResolver мы указываем где лежат наши View -->
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="net.proselyte.crud.controller.dispatcher"/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/www/"></property>
         <property name="suffix" value=".jsp"/>
     </bean>
-    <context:annotation-config/><!-- Используется для активации аннотаций в компонентах, уже зарегистрированных в контексте приложения -->
+    <context:annotation-config/>
 </beans>
