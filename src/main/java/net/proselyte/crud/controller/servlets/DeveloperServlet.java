@@ -60,10 +60,10 @@ public class DeveloperServlet extends HttpServlet {
             List<Developer> list = developerRepository.getAll();
             req.setAttribute("developerList", list);
 
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/developer/listDeveloper.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("developer/listDeveloper.jsp");
             requestDispatcher.forward(req, resp);
         }else{
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/404.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("404.jsp");
             requestDispatcher.forward(req, resp);
 
         }
@@ -136,7 +136,7 @@ public class DeveloperServlet extends HttpServlet {
         List<Developer> list = developerRepository.getAll();
         req.setAttribute("developerList", list);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/developer/listDeveloper.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("developer/listDeveloper.jsp");
         requestDispatcher.forward(req, resp);
     }
 

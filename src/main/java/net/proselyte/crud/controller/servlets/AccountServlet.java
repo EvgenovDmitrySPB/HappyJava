@@ -45,10 +45,10 @@ public class AccountServlet extends HttpServlet {
             List<Account> list = accountRepository.getAll();
             req.setAttribute("accountList", list);
 
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/account/listAccount.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("account/listAccount.jsp");
             requestDispatcher.forward(req, resp);
         }else{
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/404.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("404.jsp");
             requestDispatcher.forward(req, resp);
         }
     }
@@ -89,7 +89,7 @@ public class AccountServlet extends HttpServlet {
         List<Account> list = accountRepository.getAll();
         req.setAttribute("accountList", list);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("www/account/listAccount.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("account/listAccount.jsp");
         requestDispatcher.forward(req, resp);
     }
 
