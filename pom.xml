@@ -20,8 +20,8 @@
         <servletVersion>2.5</servletVersion>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <liquiBaseVersion>3.4.2</liquiBaseVersion>
-        <spring.version>4.0.5.RELEASE</spring.version>
-        <spring-security-version>4.0.1.RELEASE</spring-security-version>
+        <spring.version>4.3.17.RELEASE</spring.version>
+        <spring-security-version>4.2.9.RELEASE</spring-security-version>
     </properties>
 
     <build>
