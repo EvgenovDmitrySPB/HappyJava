@@ -14,7 +14,7 @@
 			idDeveloper int(5),
 			idSkill int(5),
             FOREIGN KEY (idDeveloper) REFERENCES developers (id),
-            FOREIGN KEY (idSkill) REFERENCES skills (id);)
+            FOREIGN KEY (idSkill) REFERENCES skills (id))
         </sql>
     </changeSet>
 
