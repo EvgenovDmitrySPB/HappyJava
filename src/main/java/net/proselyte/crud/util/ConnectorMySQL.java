@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public final class ConnectorMySQL {
    //private static final String PATH = "C:\\Users\\leoX\\IdeaProjects\\HappyJava\\src\\main\\resources\\liquibase\\liquibase.properties";
-   private static final String PATH = "C:\\Users\\d.evgenov\\IdeaProjects\\ProgramJDBC_MVC1\\src\\main\\resources\\liquibase\\liquibase.properties";
+   private static final String PATH = "C:\\Users\\EvgenovDS\\IdeaProjects\\HappyJava\\src\\main\\resources\\liquibase\\liquibase.properties";
 
     private static ConnectorMySQL INSTANCE = null;
     private static Connection CONNECTION = getMySqlJDBCConnection();
